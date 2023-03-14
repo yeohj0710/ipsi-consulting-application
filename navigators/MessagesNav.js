@@ -14,7 +14,7 @@ export default function MessagesNav() {
         headerTintColor: "white",
         headerBackTitleVisible: false,
         headerStyle: {
-          backgroundColor: "black",
+          backgroundColor: "white",
         },
       }}
     >

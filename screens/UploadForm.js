@@ -19,7 +19,7 @@ const UPLOAD_PHOTO_MUTATION = gql`
 
 const Container = styled.View`
   flex: 1;
-  background-color: black;
+  background-color: white;
   padding: 0px 50px;
 `;
 
@@ -33,7 +33,7 @@ const CaptionContainer = styled.View`
 
 const Caption = styled.TextInput`
   background-color: white;
-  color: black;
+  color: white;
   padding: 10px 20px;
   border-radius: 100px;
 `;

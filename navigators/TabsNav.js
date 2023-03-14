@@ -16,7 +16,7 @@ export default function TabsNav() {
         tabBarShowLabel: false,
         tabBarActiveTintColor: "white",
         tabBarStyle: {
-          backgroundColor: "black",
+          backgroundColor: "white",
           borderTopColor: "rgba(255, 255, 255, 0.2)",
         },
       }}

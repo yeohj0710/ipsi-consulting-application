@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
+import styled from "styled-components";
 
 const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccount(
@@ -24,6 +25,13 @@ const CREATE_ACCOUNT_MUTATION = gql`
       error
     }
   }
+`;
+
+const HeaderText = styled.Text`
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 30%;
 `;
 
 export default function CreateAccount({ navigation }) {
@@ -81,11 +89,12 @@ export default function CreateAccount({ navigation }) {
   }, [register]);
   return (
     <AuthLayout>
+      <HeaderText>회원가입을 위해 정보를 입력해주세요.</HeaderText>
       <TextInput
         placeholder="First Name"
         returnKeyType="next"
         onSubmitEditing={() => onNext(lastNameRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
+        placeholderTextColor={"rgba(139, 149, 159, 1)"}
         blurOnSubmit={false}
         onChangeText={(text) => setValue("firstName", text)}
       />
@@ -94,7 +103,7 @@ export default function CreateAccount({ navigation }) {
         placeholder="Last Name"
         returnKeyType="next"
         onSubmitEditing={() => onNext(usernameRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
+        placeholderTextColor={"rgba(139, 149, 159, 1)"}
         blurOnSubmit={false}
         onChangeText={(text) => setValue("lastName", text)}
       />
@@ -103,7 +112,7 @@ export default function CreateAccount({ navigation }) {
         placeholder="Username"
         returnKeyType="next"
         onSubmitEditing={() => onNext(emailRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
+        placeholderTextColor={"rgba(139, 149, 159, 1)"}
         blurOnSubmit={false}
         onChangeText={(text) => setValue("username", text)}
       />
@@ -113,7 +122,7 @@ export default function CreateAccount({ navigation }) {
         keyboardType="email-address"
         returnKeyType="next"
         onSubmitEditing={() => onNext(passwordRef)}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
+        placeholderTextColor={"rgba(139, 149, 159, 1)"}
         blurOnSubmit={false}
         onChangeText={(text) => setValue("email", text)}
       />
@@ -123,13 +132,13 @@ export default function CreateAccount({ navigation }) {
         secureTextEntry
         returnKeyType="done"
         lastOne={true}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
+        placeholderTextColor={"rgba(139, 149, 159, 1)"}
         blurOnSubmit={false}
         onChangeText={(text) => setValue("password", text)}
         onSubmitEditing={handleSubmit(onValid)}
       />
       <AuthButton
-        text="Create Accout"
+        text="등록하기"
         disabled={false}
         onPress={handleSubmit(onValid)}
       />

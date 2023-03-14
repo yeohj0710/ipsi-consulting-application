@@ -28,7 +28,7 @@ export default function LoggedInNav() {
           headerTitleAlign: "center",
           headerTintColor: "white",
           headerStyle: {
-            backgroundColor: "black",
+            backgroundColor: "white",
           },
           headerBackTitleVisible: false,
           headerBackImage: ({ tintColor }) => (

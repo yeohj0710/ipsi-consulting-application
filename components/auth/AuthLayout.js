@@ -11,16 +11,8 @@ const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background-color: black;
+  background-color: white;
   padding: 0px 40px;
-`;
-
-const Logo = styled.Image`
-  max-width: 50%;
-  width: 100%;
-  height: 100px;
-  margin: 0 auto;
-  margin-bottom: 20px;
 `;
 
 export default function AuthLayOut({ children }) {
@@ -39,10 +31,6 @@ export default function AuthLayOut({ children }) {
           behavior="position"
           keyboardVerticalOffset={Platform.OS === "ios" ? 50 : -200}
         >
-          <Logo
-            resizeMode="contain"
-            source={require("../../assets/logo.png")}
-          />
           {children}
         </KeyboardAvoidingView>
       </Container>

@@ -234,7 +234,7 @@ export default function Room({ route, navigation }) {
   messages.reverse();
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1, backgroundColor: "black" }}
+      style={{ flex: 1, backgroundColor: "white" }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={50}
     >

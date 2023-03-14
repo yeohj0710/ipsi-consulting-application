@@ -29,11 +29,11 @@ export const logUserOut = async () => {
 };
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://dgistagram.herokuapp.com/graphql",
+  uri: "https://c07b-1-233-234-50.jp.ngrok.io/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://dgistagram.herokuapp.com/graphql",
+  uri: "ws://c07b-1-233-234-50.jp.ngrok.io/graphql",
   options: {
     reconnect: true,
     connectionParams: () => ({

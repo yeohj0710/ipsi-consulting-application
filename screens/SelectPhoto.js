@@ -13,17 +13,17 @@ import { colors } from "../colors";
 
 const Container = styled.View`
   flex: 1;
-  background-color: black;
+  background-color: white;
 `;
 
 const Top = styled.View`
   flex: 1;
-  background-color: black;
+  background-color: white;
 `;
 
 const Bottom = styled.View`
   flex: 1;
-  background-color: black;
+  background-color: white;
 `;
 
 const ImageContainer = styled.TouchableOpacity``;

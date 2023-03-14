@@ -14,7 +14,7 @@ export default function UploadNav() {
       tabBarPosition="bottom"
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: "black",
+          backgroundColor: "white",
         },
         tabBarActiveTintColor: "white",
         tabBarIndicatorStyle: {
@@ -34,7 +34,7 @@ export default function UploadNav() {
                 <Ionicons color={tintColor} name="close" size={28} />
               ),
               headerStyle: {
-                backgroundColor: "black",
+                backgroundColor: "white",
                 shadowOpacity: 0.3,
               },
             }}

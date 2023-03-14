@@ -38,9 +38,9 @@ export default function PhotoScreen({ route }) {
         refreshControl={
           <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
         }
-        style={{ backgroundColor: "black" }}
+        style={{ backgroundColor: "white" }}
         contentContainerStyle={{
-          backgroundColor: "black",
+          backgroundColor: "white",
           alignItems: "center",
           justifyContent: "center",
         }}

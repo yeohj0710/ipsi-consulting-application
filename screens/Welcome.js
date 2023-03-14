@@ -5,6 +5,14 @@ import { colors } from "../colors";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
 
+const HeaderText = styled.Text`
+  color: black;
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: -50%;
+  margin-bottom: 50%;
+`;
+
 const LoginLink = styled.Text`
   color: ${colors.blue};
   font-weight: 600;
@@ -21,13 +29,14 @@ export default function Welcome({ navigation }) {
     });
   return (
     <AuthLayout>
+      <HeaderText>반갑습니다!</HeaderText>
       <AuthButton
-        text="Create New Account"
+        text="회원가입"
         disabled={false}
         onPress={goToCreateAccount}
       />
       <TouchableOpacity onPress={goToLogIn}>
-        <LoginLink>Log In</LoginLink>
+        <LoginLink>로그인</LoginLink>
       </TouchableOpacity>
     </AuthLayout>
   );

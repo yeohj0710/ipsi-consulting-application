@@ -90,7 +90,7 @@ export default function Search({ navigation }) {
   );
   return (
     <DismissKeyboard>
-      <View style={{ flex: 1, backgroundColor: "black" }}>
+      <View style={{ flex: 1, backgroundColor: "white" }}>
         {loading ? (
           <MessageContainer>
             <ActivityIndicator size="large" />

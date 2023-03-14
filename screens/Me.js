@@ -12,7 +12,7 @@ export default function Me({ navigation }) {
   return (
     <View
       style={{
-        backgroundColor: "black",
+        backgroundColor: "white",
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

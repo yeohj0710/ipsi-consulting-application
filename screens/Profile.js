@@ -12,7 +12,7 @@ export default function Profile({ navigation, route }) {
   return (
     <View
       style={{
-        backgroundColor: "black",
+        backgroundColor: "white",
         flex: 1,
         alignItems: "center",
         justifyContent: "center",

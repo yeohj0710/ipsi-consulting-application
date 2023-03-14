@@ -5,7 +5,6 @@ import { isLoggedInVar, logUserIn } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
-import { async } from "q";
 
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {

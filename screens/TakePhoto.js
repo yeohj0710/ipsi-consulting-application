@@ -9,7 +9,7 @@ import * as MediaLibrary from "expo-media-library";
 
 const Container = styled.View`
   flex: 1;
-  background-color: black;
+  background-color: white;
 `;
 
 const Actions = styled.View`
