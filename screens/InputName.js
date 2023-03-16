@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
@@ -28,23 +29,21 @@ const Circle = styled.View`
 const Title = styled.Text`
   font-size: 25px;
   font-weight: 600;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 `;
 
-const SubTitle = styled.Text`
-  font-size: 20px;
+const Mode = styled.Text`
+  font-size: 15px;
   font-weight: 500;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 20%;
 `;
 
 const NextButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 15px;
-  background-color: ${colors.darkMint};
-  margin-top: 20%;
   align-items: center;
   justify-content: center;
+  margin-top: 20%;
 `;
 
 const NextButtonText = styled.Text`
@@ -53,28 +52,43 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export default function InputName({ navigation }) {
+export let id = "",
+  password = "";
+
+export default function InputLogin({ navigation }) {
+  const color = mentor ? colors.darkMint : colors.navy;
   return (
     <AuthLayOut>
       <CircleContainer>
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
+        <ColoredCircle style={{ backgroundColor: color }} />
+        <ColoredCircle style={{ backgroundColor: color }} />
         <Circle />
         <Circle />
       </CircleContainer>
       <Title>개인정보 입력하기</Title>
-      <SubTitle>이름</SubTitle>
-      <TextInput />
-      <SubTitle>생년월일 8자리</SubTitle>
-      <TextInput />
-      <SubTitle>성별</SubTitle>
-      <TextInput />
+      <Mode style={{ color: color }}>
+        {mentor ? "멘토" : "멘티"}로 시작하기
+      </Mode>
+      <TextInput
+        style={{ marginBottom: "20%" }}
+        color={color}
+        placeholder="이름"
+      />
+      <TextInput
+        style={{ marginBottom: "20%" }}
+        color={color}
+        placeholder="생년월일 8자리 (예시 : 20230101)"
+      />
+      <BouncyCheckbox
+        size={25}
+        fillColor={color}
+        unfillColor="#FFFFFF"
+        text="Circle Checkbox"
+        iconStyle={{ borderColor: color }}
+      />
+      <Input type="checkbox" />
       <NextButton
-        style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
+        style={{ backgroundColor: color }}
         onPress={() => navigation.navigate("InputPhone")}
       >
         <NextButtonText>다음</NextButtonText>

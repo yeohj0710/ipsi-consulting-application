@@ -1,78 +1,94 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { colors } from "../colors";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
 
 const Container = styled.View`
+  flex: 1;
   width: 100%;
   align-items: center;
-  margin-top: 20%;
+  background-color: white;
 `;
 
 const Logo = styled.Image`
+  margin-top: 20%;
   width: 60%;
 `;
 
-const MentorButton = styled.TouchableOpacity`
-  width: 70%;
-  height: 80px;
-  padding: 15px 10px;
-  margin-bottom: 30px;
-  border-radius: 10px;
+const Separator = styled.View`
+  margin: 20px 0px 30px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+`;
+
+const Line = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: rgb(219, 219, 219);
+`;
+
+const Or = styled.Text`
+  margin: 0px 10px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #8e8e8e;
+`;
+
+const Button = styled.TouchableOpacity`
+  width: 80%;
+  height: 55px;
+  margin-bottom: 20px;
+  border-radius: 4px;
   align-items: center;
   justify-content: center;
 `;
 
 const ButtonText = styled.Text`
-  color: white;
+  color: #555555;
   font-size: 20px;
-  font-weight: 600;
-`;
-
-const LogInContainer = styled.View`
-  align-items: center;
-  margin-top: 10px;
-`;
-
-const LogIn = styled.TouchableOpacity``;
-
-const LogInText = styled.Text`
-  font-weight: 600;
 `;
 
 export let mentor = true;
 
 export default function ChooseMode({ navigation }) {
   return (
-    <>
-      <Container>
-        <Logo source={require("../assets/logo.png")} resizeMode="contain" />
-        <MentorButton
-          style={{ backgroundColor: colors.darkMint }}
-          onPress={() => {
-            mentor = true;
-            navigation.navigate("InputLogin");
-          }}
-        >
-          <ButtonText>멘토로 시작하기</ButtonText>
-        </MentorButton>
-        <MentorButton
-          style={{ backgroundColor: colors.navy }}
-          onPress={() => {
-            mentor = false;
-            navigation.navigate("InputLogin");
-          }}
-        >
-          <ButtonText>멘티로 시작하기</ButtonText>
-        </MentorButton>
-      </Container>
-      <LogInContainer>
-        <LogIn onPress={() => navigation.navigate("LogIn")}>
-          <LogInText>기존 아이디로 로그인하기</LogInText>
-        </LogIn>
-      </LogInContainer>
-    </>
+    <Container>
+      <Logo source={require("../assets/logo.png")} resizeMode="contain" />
+      <Button
+        style={{ backgroundColor: colors.lightgray }}
+        onPress={() => {
+          mentor = true;
+          navigation.navigate("InputLogin");
+        }}
+      >
+        <ButtonText>멘토로 시작하기</ButtonText>
+      </Button>
+      <Button
+        style={{ backgroundColor: colors.lightgray }}
+        onPress={() => {
+          mentor = false;
+          navigation.navigate("InputLogin");
+        }}
+      >
+        <ButtonText>멘티로 시작하기</ButtonText>
+      </Button>
+      <Separator>
+        <Line />
+        <Or>or</Or>
+        <Line />
+      </Separator>
+      <Button
+        style={{ backgroundColor: "#333333" }}
+        onPress={() => navigation.navigate("LogIn")}
+      >
+        <ButtonText style={{ color: "white" }}>
+          기존 아이디로 로그인하기
+        </ButtonText>
+      </Button>
+    </Container>
   );
 }

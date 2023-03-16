@@ -28,7 +28,7 @@ export default function App() {
       isLoggedInVar(true);
       tokenVar(token);
     }
-    StatusBar.setBarStyle("light-content");
+    StatusBar.setBarStyle("dark-content");
     // await persistCache({
     // cache,
     // storage: new AsyncStorageWrapper(AsyncStorage),

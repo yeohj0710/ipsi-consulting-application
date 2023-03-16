@@ -34,14 +34,7 @@ const Title = styled.Text`
 const Mode = styled.Text`
   font-size: 15px;
   font-weight: 500;
-  margin-bottom: 10%;
-`;
-
-const SubTitle = styled.Text`
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 20%;
 `;
 
 const IdContainer = styled.View`
@@ -66,9 +59,9 @@ const CheckButtonText = styled.Text`
 const NextButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 15px;
-  margin-top: 25%;
   align-items: center;
   justify-content: center;
+  margin-top: 20%;
 `;
 
 const NextButtonText = styled.Text`
@@ -81,35 +74,43 @@ export let id = "",
   password = "";
 
 export default function InputLogin({ navigation }) {
+  const color = mentor ? colors.darkMint : colors.navy;
   return (
     <AuthLayOut>
       <CircleContainer>
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
+        <ColoredCircle style={{ backgroundColor: color }} />
         <Circle />
         <Circle />
         <Circle />
       </CircleContainer>
       <Title>로그인 정보 입력하기</Title>
-      <Mode style={{ color: mentor ? colors.darkMint : colors.navy }}>
+      <Mode style={{ color: color }}>
         {mentor ? "멘토" : "멘티"}로 시작하기
       </Mode>
-      <SubTitle>아이디</SubTitle>
       <IdContainer>
-        <TextInput style={{ width: "80%" }} />
-        <CheckButton
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        >
+        <TextInput
+          style={{ width: "80%", marginBottom: "20%" }}
+          color={color}
+          placeholder="아이디"
+        />
+        <CheckButton style={{ backgroundColor: color }}>
           <CheckButtonText>중복{"\n"}확인</CheckButtonText>
         </CheckButton>
       </IdContainer>
-      <SubTitle>비밀번호</SubTitle>
-      <TextInput />
-      <SubTitle>비밀번호 확인</SubTitle>
-      <TextInput />
+      <TextInput
+        style={{ marginBottom: "20%" }}
+        color={color}
+        placeholder="비밀번호"
+        secureTextEntry={true}
+      />
+      <TextInput
+        style={{ marginBottom: "20%" }}
+        color={color}
+        placeholder="비밀번호 확인"
+        secureTextEntry={true}
+      />
       <NextButton
-        style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
+        style={{ backgroundColor: color }}
         onPress={() => navigation.navigate("InputName")}
       >
         <NextButtonText>다음</NextButtonText>
