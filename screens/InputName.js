@@ -83,7 +83,15 @@ export default function InputLogin({ navigation }) {
         size={25}
         fillColor={color}
         unfillColor="#FFFFFF"
-        text="Circle Checkbox"
+        text="남성"
+        iconStyle={{ borderColor: color }}
+        marginBottom={20}
+      />
+      <BouncyCheckbox
+        size={25}
+        fillColor={color}
+        unfillColor="#FFFFFF"
+        text="여성"
         iconStyle={{ borderColor: color }}
       />
       <NextButton

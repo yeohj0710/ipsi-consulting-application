@@ -28,17 +28,16 @@ const Circle = styled.View`
 const Title = styled.Text`
   font-size: 25px;
   font-weight: 600;
-  margin-bottom: 30px;
-`;
-
-const SubTitle = styled.Text`
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 30px;
   margin-bottom: 10px;
 `;
 
-const PhoneContainer = styled.View`
+const Mode = styled.Text`
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 20%;
+`;
+
+const IdContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -60,9 +59,9 @@ const CheckButtonText = styled.Text`
 const NextButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 15px;
-  margin-top: 20%;
   align-items: center;
   justify-content: center;
+  margin-top: 20%;
 `;
 
 const NextButtonText = styled.Text`
@@ -71,35 +70,40 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export default function InputPhone({ navigation }) {
+export let id = "",
+  password = "";
+
+export default function InputLogin({ navigation }) {
+  const color = mentor ? colors.darkMint : colors.navy;
   return (
     <AuthLayOut>
       <CircleContainer>
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
-        <ColoredCircle
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        />
+        <ColoredCircle style={{ backgroundColor: color }} />
+        <ColoredCircle style={{ backgroundColor: color }} />
+        <ColoredCircle style={{ backgroundColor: color }} />
         <Circle />
       </CircleContainer>
-      <Title>개인정보 입력하기</Title>
-      <SubTitle>휴대전화번호</SubTitle>
-      <PhoneContainer>
-        <TextInput style={{ width: "80%" }} />
-        <CheckButton
-          style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
-        >
-          <CheckButtonText>인증{"\n"}하기</CheckButtonText>
+      <Title>개인정보 인증하기</Title>
+      <Mode style={{ color: color }}>
+        {mentor ? "멘토" : "멘티"}로 시작하기
+      </Mode>
+      <IdContainer>
+        <TextInput
+          style={{ width: "80%", marginBottom: "20%" }}
+          color={color}
+          placeholder="휴대전화번호 (예시 : 01012345678)"
+        />
+        <CheckButton style={{ backgroundColor: color }}>
+          <CheckButtonText>중복{"\n"}확인</CheckButtonText>
         </CheckButton>
-      </PhoneContainer>
-      <SubTitle>인증번호 6자리</SubTitle>
-      <TextInput />
+      </IdContainer>
+      <TextInput
+        style={{ marginBottom: "20%" }}
+        color={color}
+        placeholder="인증번호"
+      />
       <NextButton
-        style={{ backgroundColor: mentor ? colors.darkMint : colors.navy }}
+        style={{ backgroundColor: color }}
         onPress={() => navigation.navigate("InputMentor")}
       >
         <NextButtonText>다음</NextButtonText>
