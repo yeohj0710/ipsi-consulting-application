@@ -86,7 +86,6 @@ export default function InputLogin({ navigation }) {
         text="Circle Checkbox"
         iconStyle={{ borderColor: color }}
       />
-      <Input type="checkbox" />
       <NextButton
         style={{ backgroundColor: color }}
         onPress={() => navigation.navigate("InputPhone")}
