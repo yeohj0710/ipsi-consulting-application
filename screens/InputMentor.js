@@ -5,6 +5,34 @@ import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { mentor } from "./ChooseMode";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { username, password } from "./InputLogin";
+import { birth, gender, name } from "./InputName";
+import { phoneNumber } from "./InputPhone";
+
+const CREATE_NEW_ACCOUNT_MUTATION = gql`
+  mutation createNewAccount(
+    $username: String!
+    $password: String!
+    $name: String!
+    $birth: String!
+    $gender: String!
+    $phoneNumber: String!
+  ) {
+    createNewAccount(
+      username: $username
+      password: $password
+      name: $name
+      birth: $birth
+      gender: $gender
+      phoneNumber: $phoneNumber
+    ) {
+      ok
+      error
+    }
+  }
+`;
 
 const CircleContainer = styled.View`
   flex-direction: row;
@@ -52,6 +80,33 @@ const NextButtonText = styled.Text`
 
 export default function InputMentor({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
+  const { register, handleSubmit, setValue, getValues } = useForm();
+  const onCompleted = (data) => {
+    const {
+      createNewAccount: { ok, error },
+    } = data;
+    console.log(username, password, name, birth, gender, phoneNumber);
+    if (ok) {
+      navigation.navigate("LogIn");
+    } else {
+      console.log(error);
+    }
+  };
+  const [createNewAccountMutation] = useMutation(CREATE_NEW_ACCOUNT_MUTATION, {
+    onCompleted,
+  });
+  const onValid = (data) => {
+    createNewAccountMutation({
+      variables: {
+        username: username,
+        password: password,
+        name: name,
+        birth: birth,
+        gender: gender,
+        phoneNumber: phoneNumber,
+      },
+    });
+  };
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -89,7 +144,7 @@ export default function InputMentor({ navigation }) {
       />
       <NextButton
         style={{ backgroundColor: color }}
-        onPress={() => navigation.navigate("ChooseMode")}
+        onPress={handleSubmit(onValid)}
       >
         <NextButtonText>완료</NextButtonText>
       </NextButton>

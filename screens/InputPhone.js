@@ -70,6 +70,8 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
+export let phoneNumber = "";
+
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
   return (
@@ -89,6 +91,9 @@ export default function InputLogin({ navigation }) {
           style={{ width: "80%", marginBottom: "20%" }}
           color={color}
           placeholder="휴대전화번호 (예시 : 01012345678)"
+          onChangeText={(text) => {
+            phoneNumber = text;
+          }}
         />
         <CheckButton style={{ backgroundColor: color }}>
           <CheckButtonText>중복{"\n"}확인</CheckButtonText>

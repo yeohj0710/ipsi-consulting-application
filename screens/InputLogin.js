@@ -70,7 +70,7 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export let id = "",
+export let username = "",
   password = "";
 
 export default function InputLogin({ navigation }) {
@@ -95,7 +95,7 @@ export default function InputLogin({ navigation }) {
           color={color}
           placeholder="아이디"
           onChangeText={(text) => {
-            id = text;
+            username = text;
           }}
         />
         <CheckButton style={{ backgroundColor: color }}>

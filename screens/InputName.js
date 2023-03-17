@@ -5,7 +5,6 @@ import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { mentor } from "./ChooseMode";
-import { id, password } from "./InputLogin";
 
 const CircleContainer = styled.View`
   flex-direction: row;
@@ -53,9 +52,12 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
+export let name = "",
+  birth = "",
+  gender = "male";
+
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
-  console.log(id, password);
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -72,11 +74,17 @@ export default function InputLogin({ navigation }) {
         style={{ marginBottom: "20%" }}
         color={color}
         placeholder="이름"
+        onChangeText={(text) => {
+          name = text;
+        }}
       />
       <TextInput
         style={{ marginBottom: "20%" }}
         color={color}
         placeholder="생년월일 8자리 (예시 : 20230101)"
+        onChangeText={(text) => {
+          birth = text;
+        }}
       />
       <BouncyCheckbox
         size={25}
@@ -85,6 +93,10 @@ export default function InputLogin({ navigation }) {
         text="남성"
         iconStyle={{ borderColor: color }}
         marginBottom={20}
+        onPress={(isChecked) => {
+          if (isChecked) gender = "male";
+          else gender = "female";
+        }}
       />
       <BouncyCheckbox
         size={25}
@@ -92,6 +104,10 @@ export default function InputLogin({ navigation }) {
         unfillColor="#FFFFFF"
         text="여성"
         iconStyle={{ borderColor: color }}
+        onPress={(isChecked) => {
+          if (isChecked) gender = "female";
+          else gender = "male";
+        }}
       />
       <NextButton
         style={{ backgroundColor: color }}
