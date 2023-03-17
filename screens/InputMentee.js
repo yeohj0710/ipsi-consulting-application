@@ -50,7 +50,10 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export default function InputMentor({ navigation }) {
+export let id = "",
+  password = "";
+
+export default function InputMentee({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
   return (
     <AuthLayOut>

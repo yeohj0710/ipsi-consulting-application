@@ -8,6 +8,7 @@ import InputLogin from "../screens/InputLogin";
 import InputName from "../screens/InputName";
 import InputPhone from "../screens/InputPhone";
 import InputMentor from "../screens/InputMentor";
+import InputMentee from "../screens/InputMentee";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ export default function LoggedOutNav() {
       <Stack.Screen name="InputName" component={InputName} />
       <Stack.Screen name="InputPhone" component={InputPhone} />
       <Stack.Screen name="InputMentor" component={InputMentor} />
+      <Stack.Screen name="InputMentee" component={InputMentee} />
       <Stack.Screen name="LogIn" component={LogIn} />
       <Stack.Screen name="CreateAccount" component={CreateAccount} />
     </Stack.Navigator>

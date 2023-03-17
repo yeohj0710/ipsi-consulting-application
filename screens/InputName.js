@@ -5,6 +5,7 @@ import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { mentor } from "./ChooseMode";
+import { id, password } from "./InputLogin";
 
 const CircleContainer = styled.View`
   flex-direction: row;
@@ -52,11 +53,9 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export let id = "",
-  password = "";
-
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
+  console.log(id, password);
   return (
     <AuthLayOut>
       <CircleContainer>

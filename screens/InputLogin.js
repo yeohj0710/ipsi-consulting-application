@@ -75,6 +75,8 @@ export let id = "",
 
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
+  let pw1 = "",
+    pw2 = "";
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -92,6 +94,9 @@ export default function InputLogin({ navigation }) {
           style={{ width: "80%", marginBottom: "20%" }}
           color={color}
           placeholder="아이디"
+          onChangeText={(text) => {
+            id = text;
+          }}
         />
         <CheckButton style={{ backgroundColor: color }}>
           <CheckButtonText>중복{"\n"}확인</CheckButtonText>
@@ -102,16 +107,25 @@ export default function InputLogin({ navigation }) {
         color={color}
         placeholder="비밀번호"
         secureTextEntry={true}
+        onChangeText={(text) => {
+          password = text;
+          pw1 = text;
+        }}
       />
       <TextInput
         style={{ marginBottom: "20%" }}
         color={color}
         placeholder="비밀번호 확인"
         secureTextEntry={true}
+        onChangeText={(text) => (pw2 = text)}
       />
       <NextButton
         style={{ backgroundColor: color }}
-        onPress={() => navigation.navigate("InputName")}
+        onPress={() => {
+          if (pw1 === "" || pw2 === "") console.log("비밀번호가 입력되지 않음");
+          else if (pw1 !== pw2) console.log("비밀번호가 일치하지 않음");
+          else navigation.navigate("InputName");
+        }}
       >
         <NextButtonText>다음</NextButtonText>
       </NextButton>

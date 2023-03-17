@@ -70,9 +70,6 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export let id = "",
-  password = "";
-
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
   return (
@@ -104,7 +101,10 @@ export default function InputLogin({ navigation }) {
       />
       <NextButton
         style={{ backgroundColor: color }}
-        onPress={() => navigation.navigate("InputMentor")}
+        onPress={() => {
+          if (mentor) navigation.navigate("InputMentor");
+          else navigation.navigate("InputMentee");
+        }}
       >
         <NextButtonText>다음</NextButtonText>
       </NextButton>

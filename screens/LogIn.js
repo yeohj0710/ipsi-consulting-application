@@ -5,6 +5,8 @@ import { isLoggedInVar, logUserIn } from "../apollo";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
+import styled from "styled-components";
+import { colors } from "../colors";
 
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
@@ -14,6 +16,15 @@ const LOGIN_MUTATION = gql`
       error
     }
   }
+`;
+
+const LogoContainer = styled.View`
+  align-items: center;
+  margin-top: -60%;
+`;
+
+const Logo = styled.Image`
+  width: 80%;
 `;
 
 export default function LogIn({ route: { params } }) {
@@ -57,30 +68,33 @@ export default function LogIn({ route: { params } }) {
   }, [register]);
   return (
     <AuthLayOut>
+      <LogoContainer>
+        <Logo source={require("../assets/logo.png")} resizeMode="contain" />
+      </LogoContainer>
       <TextInput
         value={watch("username")}
-        placeholder="Username"
+        placeholder="아이디"
         returnKeyType="next"
         autoCapitalize={"none"}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
         blurOnSubmit={false}
         onSubmitEditing={() => onNext(passwordRef)}
         onChangeText={(text) => setValue("username", text)}
+        color={"black"}
       />
       <TextInput
         value={watch("password")}
         ref={passwordRef}
-        placeholder="Password"
+        placeholder="비밀번호"
         secureTextEntry
         returnKeyType="done"
         lastOne={true}
-        placeholderTextColor={"rgba(255, 255, 255, 0.3)"}
         blurOnSubmit={false}
         onSubmitEditing={handleSubmit(onValid)}
         onChangeText={(text) => setValue("password", text)}
+        color={"black"}
       />
       <AuthButton
-        text="Log In"
+        text="로그인"
         loading={loading}
         disabled={!watch("username") || !watch("password")}
         onPress={handleSubmit(onValid)}
