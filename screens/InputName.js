@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { mentor } from "./ChooseMode";
+import BouncyCheckboxGroup from "react-native-bouncy-checkbox-group";
 
 const CircleContainer = styled.View`
   flex-direction: row;
@@ -52,12 +52,25 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export let name = "",
-  birth = "",
-  gender = "male";
+export let exName = "",
+  exBirth = "",
+  exGender = "";
 
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
+  const [name, setName] = useState("");
+  const [birth, setBirth] = useState("");
+  const [gender, setGender] = useState("");
+  const genderData = [
+    {
+      id: 0,
+      text: "남성",
+    },
+    {
+      id: 1,
+      text: "여성",
+    },
+  ];
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -74,44 +87,33 @@ export default function InputLogin({ navigation }) {
         style={{ marginBottom: "20%" }}
         color={color}
         placeholder="이름"
-        onChangeText={(text) => {
-          name = text;
-        }}
+        onChangeText={(text) => setName(text)}
       />
       <TextInput
         style={{ marginBottom: "20%" }}
         color={color}
         placeholder="생년월일 8자리 (예시 : 20230101)"
-        onChangeText={(text) => {
-          birth = text;
-        }}
+        onChangeText={(text) => setBirth(text)}
       />
-      <BouncyCheckbox
-        size={25}
-        fillColor={color}
-        unfillColor="#FFFFFF"
-        text="남성"
-        iconStyle={{ borderColor: color }}
-        marginBottom={20}
-        onPress={(isChecked) => {
-          if (isChecked) gender = "male";
-          else gender = "female";
+      <BouncyCheckboxGroup
+        checkboxProps={{
+          textStyle: { textDecorationLine: "none" },
+          style: { marginRight: "20%" },
         }}
-      />
-      <BouncyCheckbox
-        size={25}
-        fillColor={color}
-        unfillColor="#FFFFFF"
-        text="여성"
-        iconStyle={{ borderColor: color }}
-        onPress={(isChecked) => {
-          if (isChecked) gender = "female";
-          else gender = "male";
+        data={genderData}
+        onChange={(selectedItem) => {
+          if (selectedItem.id === 0) setGender("male");
+          else if (selectedItem.id === 1) setGender("female");
         }}
       />
       <NextButton
         style={{ backgroundColor: color }}
-        onPress={() => navigation.navigate("InputPhone")}
+        onPress={() => {
+          exName = name;
+          exBirth = birth;
+          exGender = gender;
+          navigation.navigate("InputPhone");
+        }}
       >
         <NextButtonText>다음</NextButtonText>
       </NextButton>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
@@ -70,10 +70,11 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export let phoneNumber = "";
+export let exPhoneNumber = "";
 
 export default function InputLogin({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
+  const [phoneNumber, setPhoneNumber] = useState("");
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -91,11 +92,12 @@ export default function InputLogin({ navigation }) {
           style={{ width: "80%", marginBottom: "20%" }}
           color={color}
           placeholder="휴대전화번호 (예시 : 01012345678)"
-          onChangeText={(text) => {
-            phoneNumber = text;
-          }}
+          onChangeText={(text) => setPhoneNumber(text)}
         />
-        <CheckButton style={{ backgroundColor: color }}>
+        <CheckButton
+          style={{ backgroundColor: color }}
+          onPress={() => sendMessage()}
+        >
           <CheckButtonText>중복{"\n"}확인</CheckButtonText>
         </CheckButton>
       </IdContainer>
@@ -107,6 +109,7 @@ export default function InputLogin({ navigation }) {
       <NextButton
         style={{ backgroundColor: color }}
         onPress={() => {
+          exPhoneNumber = phoneNumber;
           if (mentor) navigation.navigate("InputMentor");
           else navigation.navigate("InputMentee");
         }}

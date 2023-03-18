@@ -1,10 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { FlatList, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Photo from "../components/Photo";
 import ScreenLayout from "../components/ScreenLayout";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
+import useMe from "../hooks/useMe";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
@@ -55,8 +56,12 @@ export default function Feed({ navigation }) {
       headerRight: MessagesButton,
     });
   }, []);
+  const { data: meData } = useMe();
   return (
     <ScreenLayout loading={loading}>
+      <Text>{meData?.me?.id}</Text>
+      <Text>{meData?.me?.username}</Text>
+      {/* 
       <FlatList
         onEndReachedThreshold={0.8}
         onEndReached={() =>
@@ -74,6 +79,7 @@ export default function Feed({ navigation }) {
         keyExtrsor={(photo) => "" + photo.id}
         renderItem={renderPhoto}
       />
+      */}
     </ScreenLayout>
   );
 }
