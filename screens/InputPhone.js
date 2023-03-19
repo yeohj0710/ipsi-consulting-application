@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
 import AuthLayOut from "../components/auth/AuthLayout";
 import { mentor } from "./ChooseMode";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+
+const EXIST_PHONENUMBER_MUTATION = gql`
+  mutation existPhoneNumber($phoneNumber: String!) {
+    existPhoneNumber(phoneNumber: $phoneNumber) {
+      ok
+      error
+    }
+  }
+`;
 
 const CircleContainer = styled.View`
   flex-direction: row;
@@ -56,6 +67,11 @@ const CheckButtonText = styled.Text`
   font-weight: 400;
 `;
 
+const PhoneNumberCheck = styled.Text`
+  color: ${(props) => props.color};
+  margin-bottom: 13%;
+`;
+
 const NextButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 15px;
@@ -72,9 +88,44 @@ const NextButtonText = styled.Text`
 
 export let exPhoneNumber = "";
 
-export default function InputLogin({ navigation }) {
+export default function InputPhone({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumberCheckColor, setPhoneNumberCheckColor] = useState("tomato");
+  const [phoneNumberCheckMessage, setPhoneNumberCheckMessage] = useState("");
+  const { register, handleSubmit, setValue, getValues } = useForm();
+  useEffect(() => {
+    setPhoneNumberCheckColor("tomato");
+    if (phoneNumber.length !== 11 || phoneNumber.substring(0, 3) !== "010") {
+      setPhoneNumberCheckMessage(
+        "전화번호는 010으로 시작하는 11자리이어야 합니다."
+      );
+    } else {
+      setPhoneNumberCheckMessage("전화번호 중복 확인을 해주세요.");
+    }
+  }, [phoneNumber]);
+  const onCompleted = (data) => {
+    const {
+      existPhoneNumber: { ok, error },
+    } = data;
+    if (!ok) {
+      setPhoneNumberCheckColor("tomato");
+      setPhoneNumberCheckMessage(error);
+    } else {
+      setPhoneNumberCheckColor("green");
+      setPhoneNumberCheckMessage("사용 가능한 전화번호입니다.");
+    }
+  };
+  const [existPhoneNumberMutation] = useMutation(EXIST_PHONENUMBER_MUTATION, {
+    onCompleted,
+  });
+  const onValid = (data) => {
+    existPhoneNumberMutation({
+      variables: {
+        phoneNumber: phoneNumber,
+      },
+    });
+  };
   return (
     <AuthLayOut>
       <CircleContainer>
@@ -89,29 +140,35 @@ export default function InputLogin({ navigation }) {
       </Mode>
       <IdContainer>
         <TextInput
-          style={{ width: "80%", marginBottom: "20%" }}
+          style={{ width: "80%" }}
           color={color}
           placeholder="휴대전화번호 (예시 : 01012345678)"
           onChangeText={(text) => setPhoneNumber(text)}
         />
         <CheckButton
           style={{ backgroundColor: color }}
-          onPress={() => sendMessage()}
+          onPress={handleSubmit(onValid)}
         >
           <CheckButtonText>중복{"\n"}확인</CheckButtonText>
         </CheckButton>
       </IdContainer>
+      <PhoneNumberCheck color={phoneNumberCheckColor}>
+        {phoneNumberCheckMessage}
+      </PhoneNumberCheck>
       <TextInput
         style={{ marginBottom: "20%" }}
         color={color}
+        backgroundColor="gray"
         placeholder="인증번호"
+        editable={false}
       />
       <NextButton
         style={{ backgroundColor: color }}
         onPress={() => {
-          exPhoneNumber = phoneNumber;
-          if (mentor) navigation.navigate("InputMentor");
-          else navigation.navigate("InputMentee");
+          if (phoneNumberCheckColor === "green") {
+            exPhoneNumber = phoneNumber;
+            navigation.navigate("InputMentorMentee");
+          }
         }}
       >
         <NextButtonText>다음</NextButtonText>

@@ -35,6 +35,7 @@ const MessageText = styled.Text`
 
 const Input = styled.TextInput`
   background-color: rgba(255, 255, 255, 1);
+  border: 1px solid gray;
   width: ${(props) => props.width / 1.5}px;
   padding: 5px 10px;
   border-radius: 7px;
@@ -56,7 +57,7 @@ export default function Search({ navigation }) {
     <Input
       width={width}
       placeholderTextColor="rgba(0, 0, 0, 0.8)"
-      placeholder="Search photos"
+      placeholder="검색"
       autoCapitalize="none"
       returnKeyLabel="Search"
       returnKeyType="search"

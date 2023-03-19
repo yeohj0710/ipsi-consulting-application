@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { TextInput } from "../components/auth/AuthShared";
 import { colors } from "../colors";
@@ -73,7 +73,7 @@ const UsernameCheck = styled.Text`
 `;
 
 const PasswordCheck = styled.Text`
-  color: tomato;
+  color: ${(props) => props.color};
   margin-bottom: 20%;
 `;
 
@@ -100,18 +100,39 @@ export default function InputLogin({ navigation }) {
   const [firstPassword, setFirstPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
   const [passwordCheckMessage, setPasswordCheckMessage] = useState("");
-  const [usernameCheckColor, setUsernameCheckColor] = useState("black");
+  const [usernameCheckColor, setUsernameCheckColor] = useState("tomato");
+  const [passwordCheckColor, setPasswordCheckColor] = useState("tomato");
   const { register, handleSubmit, setValue, getValues } = useForm();
+  useEffect(() => {
+    setUsernameCheckColor("tomato");
+    if (username.length < 4) {
+      setUsernameCheckMessage("아이디는 4자 이상이어야 합니다.");
+    } else {
+      setUsernameCheckMessage("아이디 중복 확인을 해주세요.");
+    }
+  }, [username]);
+  useEffect(() => {
+    if (firstPassword !== secondPassword) {
+      setPasswordCheckColor("tomato");
+      setPasswordCheckMessage("비밀번호가 일치하지 않습니다.");
+    } else if (firstPassword.length < 4) {
+      setPasswordCheckColor("tomato");
+      setPasswordCheckMessage("비밀번호는 4자리 이상이어야 합니다.");
+    } else {
+      setPasswordCheckColor("green");
+      setPasswordCheckMessage("사용 가능한 비밀번호입니다.");
+    }
+  }, [firstPassword, secondPassword]);
   const onCompleted = (data) => {
     const {
       existUsername: { ok, error },
     } = data;
-    if (ok) {
-      setUsernameCheckColor("green");
-      setUsernameCheckMessage("사용 가능한 아이디입니다.");
-    } else {
+    if (!ok) {
       setUsernameCheckColor("tomato");
       setUsernameCheckMessage(error);
+    } else {
+      setUsernameCheckColor("green");
+      setUsernameCheckMessage("사용 가능한 아이디입니다.");
     }
   };
   const [existUsernameMutation] = useMutation(EXIST_USERNAME_MUTATION, {
@@ -166,13 +187,16 @@ export default function InputLogin({ navigation }) {
         secureTextEntry={true}
         onChangeText={(text) => setSecondPassword(text)}
       />
-      <PasswordCheck>{passwordCheckMessage}</PasswordCheck>
+      <PasswordCheck color={passwordCheckColor}>
+        {passwordCheckMessage}
+      </PasswordCheck>
       <NextButton
         style={{ backgroundColor: color }}
         onPress={() => {
-          if (firstPassword !== secondPassword)
-            setPasswordCheckMessage("비밀번호가 일치하지 않습니다.");
-          else {
+          if (
+            usernameCheckColor === "green" &&
+            passwordCheckColor === "green"
+          ) {
             exUsername = username;
             exPassword = firstPassword;
             navigation.navigate("InputName");

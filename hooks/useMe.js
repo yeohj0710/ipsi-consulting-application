@@ -6,9 +6,20 @@ const ME_QUERY = gql`
   query me {
     me {
       id
+      mentor
       username
+      name
+      birth
+      gender
+      phoneNumber
+      counselPrice
+      major
+      field
       bio
       avatar
+      createdAt
+      updatedAt
+      isMe
     }
   }
 `;

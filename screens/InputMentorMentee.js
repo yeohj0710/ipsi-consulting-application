@@ -91,7 +91,7 @@ const NextButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export default function InputMentor({ navigation }) {
+export default function InputMentorMentee({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
   const [counselPrice, setCounselPrice] = useState(0);
   const [major, setMajor] = useState("");
@@ -135,7 +135,7 @@ export default function InputMentor({ navigation }) {
   const onValid = (data) => {
     createNewAccountMutation({
       variables: {
-        mentor: true,
+        mentor: mentor,
         username: exUsername,
         password: exPassword,
         name: exName,
@@ -160,19 +160,23 @@ export default function InputMentor({ navigation }) {
       <Mode style={{ color: color }}>
         {mentor ? "멘토" : "멘티"}로 시작하기
       </Mode>
-      <TextInput
-        style={{ marginBottom: "20%" }}
-        color={color}
-        placeholder="30분 상담 금액 (1,000원 단위로 입력)"
-        onChangeText={(text) => setCounselPrice(Number(text))}
-      />
-      <SubTitle>단과대학</SubTitle>
+      {mentor ? (
+        <TextInput
+          style={{ marginBottom: "20%" }}
+          color={color}
+          placeholder="30분 상담 금액 (1,000원 단위로 입력)"
+          onChangeText={(text) => setCounselPrice(Number(text))}
+        />
+      ) : (
+        <></>
+      )}
+      <SubTitle>{mentor ? "" : "희망 "}단과대학</SubTitle>
       <BouncyCheckboxGroup
         checkboxProps={{
           textStyle: { textDecorationLine: "none" },
           style: {
             transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
-            marginLeft: "-3%",
+            marginLeft: "-3.5%",
             marginBottom: "15%",
           },
         }}
@@ -185,12 +189,12 @@ export default function InputMentor({ navigation }) {
           else if (selectedItem.id === 4) setMajor("약학대학");
         }}
       />
-      <SubTitle>상담분야</SubTitle>
+      <SubTitle>{mentor ? "" : "희망 "}상담분야</SubTitle>
       <CheckBoxContainer>
         <BouncyCheckbox
           style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
           textStyle={{ textDecorationLine: "none" }}
-          marginLeft={"-1.5%"}
+          marginLeft={"-2%"}
           fillColor={color}
           unfillColor="#FFFFFF"
           text={"학습\n코칭"}
@@ -206,7 +210,7 @@ export default function InputMentor({ navigation }) {
         <BouncyCheckbox
           style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
           textStyle={{ textDecorationLine: "none" }}
-          marginLeft={"-1.5%"}
+          marginLeft={"-2%"}
           fillColor={color}
           unfillColor="#FFFFFF"
           text={"대학\n입시"}
@@ -222,7 +226,7 @@ export default function InputMentor({ navigation }) {
         <BouncyCheckbox
           style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
           textStyle={{ textDecorationLine: "none" }}
-          marginLeft={"-1.5%"}
+          marginLeft={"-2%"}
           fillColor={color}
           unfillColor="#FFFFFF"
           text={"대학원"}
@@ -238,7 +242,7 @@ export default function InputMentor({ navigation }) {
         <BouncyCheckbox
           style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
           textStyle={{ textDecorationLine: "none" }}
-          marginLeft={"-1.5%"}
+          marginLeft={"-2%"}
           fillColor={color}
           unfillColor="#FFFFFF"
           text={"편입"}
@@ -254,7 +258,7 @@ export default function InputMentor({ navigation }) {
         <BouncyCheckbox
           style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
           textStyle={{ textDecorationLine: "none" }}
-          marginLeft={"-1.5%"}
+          marginLeft={"-2%"}
           fillColor={color}
           unfillColor="#FFFFFF"
           text={"진로\n전공"}

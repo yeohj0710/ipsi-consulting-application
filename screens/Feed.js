@@ -59,8 +59,7 @@ export default function Feed({ navigation }) {
   const { data: meData } = useMe();
   return (
     <ScreenLayout loading={loading}>
-      <Text>{meData?.me?.id}</Text>
-      <Text>{meData?.me?.username}</Text>
+      <Text>{meData?.me?.name}님 환영합니다!</Text>
       {/* 
       <FlatList
         onEndReachedThreshold={0.8}

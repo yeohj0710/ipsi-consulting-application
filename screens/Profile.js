@@ -18,7 +18,7 @@ export default function Profile({ navigation, route }) {
         justifyContent: "center",
       }}
     >
-      <Text style={{ color: "white" }}>Someone's Profile</Text>
+      <Text style={{ color: "black" }}>Someone's Profile</Text>
     </View>
   );
 }

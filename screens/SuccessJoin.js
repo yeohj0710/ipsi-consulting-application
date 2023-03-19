@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { colors } from "../colors";
 import AuthButton from "../components/auth/AuthButton";
 import AuthLayout from "../components/auth/AuthLayout";
+import { mentor } from "./ChooseMode";
 import { exName } from "./InputName";
 
 const Container = styled.View`
@@ -74,7 +75,9 @@ export default function SuccessJoin({ navigation }) {
   return (
     <Container>
       <Logo source={require("../assets/logo.png")} resizeMode="contain" />
-      <SmallText>{exName} 멘토님</SmallText>
+      <SmallText>
+        {exName} {mentor ? "멘토" : "멘티"}님
+      </SmallText>
       <LargeText>가입을 환영합니다</LargeText>
       <Button
         style={{ backgroundColor: colors.lightgray }}
@@ -93,9 +96,15 @@ export default function SuccessJoin({ navigation }) {
         style={{ backgroundColor: "#333333" }}
         onPress={() => navigation.navigate("LogIn")}
       >
-        <ButtonText style={{ color: "white" }}>학력 인증하기</ButtonText>
+        <ButtonText style={{ color: "white" }}>
+          {mentor ? "학력 인증하기" : "프로필 작성하기"}
+        </ButtonText>
       </Button>
-      <BottomText>학력을 인증하면 더 자유롭게 활동할 수 있어요.</BottomText>
+      <BottomText>
+        {mentor
+          ? "학력을 인증하면 더 자유롭게 활동할 수 있어요."
+          : "프로필을 구체적으로 작성하여 적합한 멘토를 찾아보세요."}
+      </BottomText>
     </Container>
   );
 }

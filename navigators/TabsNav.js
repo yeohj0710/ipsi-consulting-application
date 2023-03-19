@@ -14,7 +14,7 @@ export default function TabsNav() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "white",
+        tabBarActiveTintColor: "gray",
         tabBarStyle: {
           backgroundColor: "white",
           borderTopColor: "rgba(255, 255, 255, 0.2)",
@@ -41,7 +41,7 @@ export default function TabsNav() {
       >
         {() => <SharedStackNav screenName="Search" />}
       </Tabs.Screen>
-      <Tabs.Screen
+      {/*<Tabs.Screen
         name="Camera"
         component={View}
         listeners={({ navigation }) => {
@@ -57,7 +57,7 @@ export default function TabsNav() {
             <TabIcon iconName={"camera"} color={color} focused={focused} />
           ),
         }}
-      />
+      />*/}
       <Tabs.Screen
         name="NotificationsTab"
         options={{

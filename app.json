@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "userInterfaceStyle": "automatic"
@@ -32,7 +34,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "8f55f6a9-24c8-4650-bed9-73633c890305"
+        "projectId": "cb9ab8c5-6471-4535-9ee7-80360aee2650"
       }
     }
   }
