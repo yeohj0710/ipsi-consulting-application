@@ -10,9 +10,9 @@ npm-debug.*
 *.orig.*
 web-build/
 .env
-.aab
-.apks
-.zip
+*.aab
+*.apks
+*.zip
 
 # macOS
 .DS_Store
