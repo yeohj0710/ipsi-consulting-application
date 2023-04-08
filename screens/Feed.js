@@ -6,6 +6,8 @@ import Photo from "../components/Photo";
 import ScreenLayout from "../components/ScreenLayout";
 import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 import useMe from "../hooks/useMe";
+import styled from "styled-components";
+import { colors } from "../colors";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
@@ -26,6 +28,64 @@ const FEED_QUERY = gql`
   }
   ${PHOTO_FRAGMENT}
   ${COMMENT_FRAGMENT}
+`;
+
+const Container = styled.View`
+  flex: 1;
+  width: 100%;
+  padding-top: 40px;
+  padding-left: 30px;
+  padding-right: 35px;
+  background-color: white;
+`;
+
+const Name = styled.Text`
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+const Title = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 10px;
+`;
+
+const ProfileContainer = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border: 1.2px solid ${colors.darkMint};
+  border-radius: 10px;
+`;
+
+const ProfileImg = styled.Image`
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  border: 1px solid #c3c3c3;
+  border-radius: 25px;
+`;
+
+const ProfileMajor = styled.Text`
+  font-weight: 500;
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const FindMentee = styled.TouchableOpacity`
+  height: 50px;
+  width: 100%;
+  margin-top: 30px;
+  padding-left: 20px;
+  border: 1.2px solid ${colors.darkMint};
+  border-radius: 10px;
+  justify-content: center;
+`;
+
+const FindMenteeText = styled.Text`
+  font-size: 13px;
+  color: gray;
 `;
 
 export default function Feed({ navigation }) {
@@ -59,7 +119,23 @@ export default function Feed({ navigation }) {
   const { data: meData } = useMe();
   return (
     <ScreenLayout loading={loading}>
-      <Text>{meData?.me?.name}님 환영합니다!</Text>
+      <Container>
+        <Name>{meData?.me?.name} 멘토님</Name>
+        <Title>프로필 미리보기</Title>
+        <ProfileContainer>
+          {meData?.me?.avatar ? (
+            <></>
+          ) : (
+            <ProfileImg source={require("../assets/profile.png")} />
+          )}
+          <ProfileMajor>{meData?.me?.major}</ProfileMajor>
+        </ProfileContainer>
+        <FindMentee onPress={() => navigation.navigate("Search")}>
+          <FindMenteeText>멘티 찾기</FindMenteeText>
+        </FindMentee>
+        <Title>받은 요청</Title>
+        <Title>상담 내역</Title>
+      </Container>
       {/* 
       <FlatList
         onEndReachedThreshold={0.8}

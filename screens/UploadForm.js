@@ -85,7 +85,7 @@ export default function UploadForm({ route, navigation }) {
     const file = new ReactNativeFile({
       uri: route.params.file,
       name: `1.jpg`,
-      type: "Image/jgeg",
+      type: "Image/jpeg",
     });
     uploadPhotoMutation({
       variables: {

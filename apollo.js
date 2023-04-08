@@ -29,11 +29,13 @@ export const logUserOut = async () => {
 };
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://ipsi.herokuapp.com/graphql",
+  // uri: "https://ipsi.herokuapp.com/graphql",
+  uri: "https://07d9-106-101-67-110.jp.ngrok.io/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://ipsi.herokuapp.com/graphql",
+  // uri: "ws://ipsi.herokuapp.com/graphql",
+  uri: "ws://07d9-106-101-67-110.jp.ngrok.io/graphql",
   options: {
     reconnect: true,
     connectionParams: () => ({

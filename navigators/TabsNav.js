@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, View } from "react-native";
+import { Image } from "react-native";
 import TabIcon from "../components/nav/TabIcon";
 import SharedStackNav from "./SharedStackNav";
 import useMe from "../hooks/useMe";
@@ -13,8 +13,8 @@ export default function TabsNav() {
     <Tabs.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "gray",
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: "#3A6C82",
         tabBarStyle: {
           backgroundColor: "white",
           borderTopColor: "rgba(255, 255, 255, 0.2)",
@@ -22,7 +22,7 @@ export default function TabsNav() {
       }}
     >
       <Tabs.Screen
-        name="FeedTab"
+        name="홈"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"home"} color={color} focused={focused} />
@@ -32,34 +32,18 @@ export default function TabsNav() {
         {() => <SharedStackNav screenName="Feed" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="SearchTab"
+        name="멘티찾기"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"search"} color={color} focused={focused} />
           ),
+          tabBarVisible: false,
         }}
       >
         {() => <SharedStackNav screenName="Search" />}
       </Tabs.Screen>
-      {/*<Tabs.Screen
-        name="Camera"
-        component={View}
-        listeners={({ navigation }) => {
-          return {
-            tabPress: (e) => {
-              e.preventDefault();
-              navigation.navigate("Upload");
-            },
-          };
-        }}
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"camera"} color={color} focused={focused} />
-          ),
-        }}
-      />*/}
       <Tabs.Screen
-        name="NotificationsTab"
+        name="찜한멘티"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"heart"} color={color} focused={focused} />
@@ -69,7 +53,31 @@ export default function TabsNav() {
         {() => <SharedStackNav screenName="Notifications" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="MeTab"
+        name="제안/요청"
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon iconName={"mail"} color={color} focused={focused} />
+          ),
+        }}
+      >
+        {() => <SharedStackNav screenName="Notifications" />}
+      </Tabs.Screen>
+      <Tabs.Screen
+        name="상담"
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon
+              iconName={"md-chatbubbles"}
+              color={color}
+              focused={focused}
+            />
+          ),
+        }}
+      >
+        {() => <SharedStackNav screenName="Notifications" />}
+      </Tabs.Screen>
+      <Tabs.Screen
+        name="프로필"
         options={{
           tabBarIcon: ({ focused, color, size }) =>
             data?.me?.avatar ? (
@@ -89,6 +97,36 @@ export default function TabsNav() {
       >
         {() => <SharedStackNav screenName="Me" />}
       </Tabs.Screen>
+
+      {/*
+        <Tabs.Screen
+          name="SearchTab"
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabIcon iconName={"search"} color={color} focused={focused} />
+            ),
+          }}
+        >
+          {() => <SharedStackNav screenName="Search" />}
+        </Tabs.Screen>
+        <Tabs.Screen
+        name="Camera"
+        component={View}
+        listeners={({ navigation }) => {
+          return {
+            tabPress: (e) => {
+              e.preventDefault();
+              navigation.navigate("Upload");
+            },
+          };
+        }}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon iconName={"camera"} color={color} focused={focused} />
+          ),
+        }}
+      />
+      */}
     </Tabs.Navigator>
   );
 }

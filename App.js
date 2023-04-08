@@ -9,6 +9,7 @@ import client, { isLoggedInVar, tokenVar, cache } from "./apollo";
 import LoggedInNav from "./navigators/LoggedInNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "react-native";
+import useMe from "./hooks/useMe";
 // import { AsyncStorageWrapper, persistCache } from "apollo3-cache-persist";
 
 export default function App() {
@@ -23,7 +24,7 @@ export default function App() {
     return Promise.all([...fontPromises, ...imagePromises]);
   };
   const preload = async () => {
-    AsyncStorage.clear();
+    // AsyncStorage.clear();
     const token = await AsyncStorage.getItem("token");
     if (token) {
       isLoggedInVar(true);

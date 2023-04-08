@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  Text,
   TouchableOpacity,
   useWindowDimensions,
   View,
@@ -12,11 +13,11 @@ import {
 import styled from "styled-components/native";
 import DismissKeyboard from "../components/DismissKeyboard";
 
-const SEARCH_PHOTOS = gql`
-  query searchPhotos($keyword: String!) {
-    searchPhotos(keyword: $keyword) {
+const SEARCH_USERS = gql`
+  query searchUsers($keyword: String!) {
+    searchUsers(keyword: $keyword) {
       id
-      file
+      name
     }
   }
 `;
@@ -29,7 +30,7 @@ const MessageContainer = styled.View`
 
 const MessageText = styled.Text`
   margin-top: 15px;
-  color: white;
+  color: black;
   font-weight: 600;
 `;
 
@@ -45,7 +46,7 @@ export default function Search({ navigation }) {
   const numColumns = 4;
   const { width } = useWindowDimensions();
   const { setValue, register, watch, handleSubmit } = useForm();
-  const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_PHOTOS);
+  const [startQueryFn, { loading, data, called }] = useLazyQuery(SEARCH_USERS);
   const onValid = ({ keyword }) => {
     startQueryFn({
       variables: {
@@ -72,21 +73,12 @@ export default function Search({ navigation }) {
     });
     register("keyword", {
       required: true,
-      minLength: 3,
+      minLength: 0,
     });
   }, []);
-  const renderItem = ({ item: photo }) => (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Photo", {
-          photoId: photo.id,
-        })
-      }
-    >
-      <Image
-        source={{ uri: photo.file }}
-        style={{ width: width / numColumns, height: 100 }}
-      />
+  const renderItem = ({ item: user }) => (
+    <TouchableOpacity>
+      <Text>{user.name}</Text>
     </TouchableOpacity>
   );
   return (
@@ -95,24 +87,24 @@ export default function Search({ navigation }) {
         {loading ? (
           <MessageContainer>
             <ActivityIndicator size="large" />
-            <MessageText>Searching...</MessageText>
+            <MessageText>검색 중</MessageText>
           </MessageContainer>
         ) : null}
         {!called ? (
           <MessageContainer>
-            <MessageText>Search by keyword</MessageText>
+            <MessageText>검색</MessageText>
           </MessageContainer>
         ) : null}
-        {data?.searchPhotos !== undefined ? (
-          data?.searchPhotos?.length === 0 ? (
+        {data?.searchUsers !== undefined ? (
+          data?.searchUsers?.length === 0 ? (
             <MessageContainer>
-              <MessageText>Could not find anything.</MessageText>
+              <MessageText>해당하는 멘티가 존재하지 않습니다</MessageText>
             </MessageContainer>
           ) : (
             <FlatList
               numColumns={numColumns}
-              data={data?.searchPhotos}
-              keyExtractor={(photo) => "" + photo.id}
+              data={data?.searchUsers}
+              keyExtractor={(user) => "" + user.id}
               renderItem={renderItem}
             />
           )
