@@ -60,11 +60,11 @@ const ProfileContainer = styled.View`
 `;
 
 const ProfileImg = styled.Image`
-  height: 50px;
-  width: 50px;
+  height: 70px;
+  width: 70px;
   margin: 10px;
   border: 1px solid #c3c3c3;
-  border-radius: 25px;
+  border-radius: 35px;
 `;
 
 const ProfileMajor = styled.Text`
@@ -124,15 +124,17 @@ export default function Feed({ navigation }) {
         <Title>프로필 미리보기</Title>
         <ProfileContainer>
           {meData?.me?.avatar ? (
-            <></>
+            <ProfileImg source={{ uri: meData?.me?.avatar }} />
           ) : (
             <ProfileImg source={require("../assets/profile.png")} />
           )}
           <ProfileMajor>{meData?.me?.major}</ProfileMajor>
         </ProfileContainer>
+        {/*
         <FindMentee onPress={() => navigation.navigate("Search")}>
           <FindMenteeText>멘티 찾기</FindMenteeText>
         </FindMentee>
+        */}
         <Title>받은 요청</Title>
         <Title>상담 내역</Title>
       </Container>

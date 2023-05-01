@@ -6,6 +6,7 @@ import UploadNav from "./UploadNav";
 import UploadForm from "../screens/UploadForm";
 import MessagesNav from "./MessagesNav";
 import useMe from "../hooks/useMe";
+import EditProfileNav from "./EditProfileNav";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,11 @@ export default function LoggedInNav() {
         name="Tabs"
         options={{ headerShown: false }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="EditProfileNav"
+        options={{ headerShown: false }}
+        component={EditProfileNav}
       />
       <Stack.Screen
         name="Upload"
