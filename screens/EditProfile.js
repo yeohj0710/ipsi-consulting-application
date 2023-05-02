@@ -5,6 +5,8 @@ import * as ImagePicker from "expo-image-picker";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { ReactNativeFile } from "apollo-upload-client";
+import * as Update from "expo-updates";
+import { ActivityIndicator } from "react-native";
 
 const EDIT_PROFILE_MUTATION = gql`
   mutation editProfile(
@@ -36,21 +38,14 @@ const Container = styled.View`
 
 const ProfileContainer = styled.View`
   margin-top: 20px;
-  margin-left: 20px;
+  align-items: center;
 `;
 
 const ProfileImg = styled.Image`
-  height: 100px;
-  width: 100px;
-  margin-bottom: 20px;
+  height: 150px;
+  width: 150px;
   border: 1px solid #c3c3c3;
-  border-radius: 50px;
-`;
-
-const Title = styled.Text`
-  color: black;
-  font-size: 25px;
-  font-weight: 600;
+  border-radius: 75px;
   margin-bottom: 20px;
 `;
 
@@ -61,12 +56,12 @@ const ProfileText = styled.Text`
 `;
 
 const EditButton = styled.TouchableOpacity`
-  width: 25%;
-  height: 50px;
-  margin-top: 30px;
+  width: 120px;
+  height: 35px;
+  margin-bottom: 40px;
   align-items: center;
   justify-content: center;
-  background-color: #dddddd;
+  background-color: #eeeeee;
   border-radius: 5px;
 `;
 
@@ -75,17 +70,18 @@ const EditButtonText = styled.Text`
   font-size: 15px;
 `;
 
-const CounselPrice = styled.TextInput`
+const BioInput = styled.TextInput`
   width: 80%;
-  margin: 10px;
+  margin-bottom: 20px;
   padding: 10px 20px;
   background-color: white;
   color: black;
-  border: 1px solid gray;
+  border: 1px solid #cccccc;
   border-radius: 10px;
 `;
 
 export default function EditProfile({ navigation }) {
+  const [loading, setLoading] = useState(false);
   const [bio, setBio] = useState("");
   const [image, setImage] = useState(null);
   const { data } = useMe();
@@ -121,7 +117,7 @@ export default function EditProfile({ navigation }) {
   const [editProfileMutation] = useMutation(EDIT_PROFILE_MUTATION, {
     onCompleted,
   });
-  const onValid = () => {
+  const onValid = async () => {
     let file;
     if (image) {
       file = new ReactNativeFile({
@@ -130,13 +126,13 @@ export default function EditProfile({ navigation }) {
         type: "Image/jpg",
       });
     }
-    editProfileMutation({
+    await editProfileMutation({
       variables: {
         firstName: data?.me?.firstName,
         lastName: data?.me?.lastName,
         username: data?.me?.username,
         password: data?.me?.password,
-        bio: data?.me?.bio,
+        bio: bio === "" ? data?.me?.bio : bio,
         avatar: file,
       },
     });
@@ -144,7 +140,6 @@ export default function EditProfile({ navigation }) {
   return (
     <Container>
       <ProfileContainer>
-        <Title>프로필</Title>
         {data?.me?.avatar ? (
           <ProfileImg source={{ uri: image ? image : data?.me?.avatar }} />
         ) : (
@@ -155,15 +150,25 @@ export default function EditProfile({ navigation }) {
         <EditButton onPress={pickImage}>
           <EditButtonText>이미지 선택</EditButtonText>
         </EditButton>
-        <ProfileText>{data?.me?.bio}</ProfileText>
-        <CounselPrice
+        <BioInput
           returnKeyType="done"
+          defaultValue={data?.me?.bio}
           placeholder="프로필 메시지"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
           onChangeText={(text) => setBio(text)}
         />
-        <EditButton onPress={() => handleSubmit(onValid)()}>
-          <EditButtonText>수정</EditButtonText>
+        <EditButton
+          onPress={async () => {
+            setLoading(true);
+            await handleSubmit(onValid)();
+            Update.reloadAsync();
+          }}
+        >
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <EditButtonText>수정</EditButtonText>
+          )}
         </EditButton>
       </ProfileContainer>
     </Container>

@@ -26,6 +26,7 @@
     "expo-app-loading": "~2.1.1",
     "expo-asset": "~8.7.0",
     "expo-camera": "~13.1.0",
+    "expo-image-picker": "~14.0.2",
     "expo-media-library": "~15.0.0",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
@@ -47,7 +48,7 @@
     "styled-components": "^5.3.6",
     "subscriptions-transport-ws": "^0.11.0",
     "twilio": "^4.8.0",
-    "expo-image-picker": "~14.0.2"
+    "expo-updates": "~0.15.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

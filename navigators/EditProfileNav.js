@@ -18,7 +18,7 @@ export default function EditProfileNav() {
       }}
     >
       <Stack.Screen
-        name="EditProfile"
+        name="프로필 수정"
         options={{
           headerBackImage: ({ tintColor }) => (
             <Ionicons color={tintColor} name="chevron-down" size={30} />
