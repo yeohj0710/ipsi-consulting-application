@@ -8,6 +8,8 @@ import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from "../fragments";
 import useMe from "../hooks/useMe";
 import styled from "styled-components";
 import { colors } from "../colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Update from "expo-updates";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
@@ -51,7 +53,7 @@ const Title = styled.Text`
   margin-bottom: 10px;
 `;
 
-const ProfileContainer = styled.View`
+const SmallContainer = styled.View`
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -67,25 +69,89 @@ const ProfileImg = styled.Image`
   border-radius: 35px;
 `;
 
-const ProfileMajor = styled.Text`
-  font-weight: 500;
-  margin-top: 10px;
+const ProfileInfoContainer = styled.View`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   margin-left: 10px;
 `;
 
-const FindMentee = styled.TouchableOpacity`
-  height: 50px;
+const ProfileMajor = styled.Text`
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 5px;
+`;
+
+const ProfileText = styled.Text`
+  font-size: 14px;
+  color: gray;
+`;
+
+const Box = styled.View`
   width: 100%;
-  margin-top: 30px;
-  padding-left: 20px;
-  border: 1.2px solid ${colors.darkMint};
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  // border: 1.2px solid ${colors.darkMint};
   border-radius: 10px;
+`;
+
+const SmallBox1 = styled.View`
+  width: 31%;
+  height: 80px;
+  margin: 10px 15px 10px 0px;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  align-items: center;
   justify-content: center;
 `;
 
-const FindMenteeText = styled.Text`
-  font-size: 13px;
+const SmallBox2 = styled.View`
+  width: 31%;
+  height: 80px;
+  margin: 10px 15px 10px 0px;
+  background-color: ${colors.darkMint};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SmallBox3 = styled.View`
+  width: 31%;
+  height: 80px;
+  margin: 10px 10px 10px 0px;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const BoldText = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+`;
+
+const GrayText = styled.Text`
+  font-size: 14px;
   color: gray;
+`;
+
+const LogoutButton = styled.TouchableOpacity`
+  width: 120px;
+  height: 35px;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: #eeeeee;
+  border-radius: 5px;
+  align-self: center;
+`;
+
+const LogoutButtonText = styled.Text`
+  color: black;
+  font-size: 15px;
 `;
 
 export default function Feed({ navigation }) {
@@ -121,15 +187,34 @@ export default function Feed({ navigation }) {
     <ScreenLayout loading={loading}>
       <Container>
         <Name>{meData?.me?.name} 멘토님</Name>
+        <Title>멘티 찾기</Title>
+        <SmallContainer>
+          <Ionicons
+            style={{ margin: 12 }}
+            name={"search"}
+            color={"gray"}
+            size={22}
+          />
+          <ProfileText style={{ marginTop: 14 }}>멘티 찾기</ProfileText>
+        </SmallContainer>
         <Title>프로필 미리보기</Title>
-        <ProfileContainer>
+        <SmallContainer>
           {meData?.me?.avatar ? (
             <ProfileImg source={{ uri: meData?.me?.avatar }} />
           ) : (
             <ProfileImg source={require("../assets/profile.png")} />
           )}
-          <ProfileMajor>{meData?.me?.major}</ProfileMajor>
-        </ProfileContainer>
+          <ProfileInfoContainer>
+            <ProfileMajor>{meData?.me?.major}</ProfileMajor>
+            <ProfileText>
+              30분 상담 금액 : {meData?.me?.counselPrice}원
+            </ProfileText>
+            <ProfileText>
+              상담분야 :{" "}
+              {meData?.me?.field ? JSON.parse(meData?.me?.field) : ""}
+            </ProfileText>
+          </ProfileInfoContainer>
+        </SmallContainer>
         {/*
         <FindMentee onPress={() => navigation.navigate("Search")}>
           <FindMenteeText>멘티 찾기</FindMenteeText>
@@ -137,6 +222,31 @@ export default function Feed({ navigation }) {
         */}
         <Title>받은 요청</Title>
         <Title>상담 내역</Title>
+        <Box>
+          <SmallBox1>
+            <BoldText>0</BoldText>
+            <GrayText>전체</GrayText>
+          </SmallBox1>
+          <SmallBox2>
+            <BoldText style={{ color: "white" }}>0</BoldText>
+            <GrayText style={{ color: "white" }}>예정 상담</GrayText>
+          </SmallBox2>
+          <SmallBox3>
+            <BoldText>0</BoldText>
+            <GrayText>완료 상담</GrayText>
+          </SmallBox3>
+        </Box>
+        <GrayText style={{ textAlign: "center" }}>
+          오늘 OO시 OO분에 상담이 예정되어 있어요.
+        </GrayText>
+        <LogoutButton
+          onPress={async () => {
+            await AsyncStorage.clear();
+            Update.reloadAsync();
+          }}
+        >
+          <LogoutButtonText>로그아웃</LogoutButtonText>
+        </LogoutButton>
       </Container>
       {/* 
       <FlatList
