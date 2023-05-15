@@ -2,23 +2,17 @@ import { gql, useQuery, useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useForm } from "react-hook-form";
-import {
-  ActivityIndicator,
-  FlatList,
-  Image,
-  Text,
-  TouchableOpacity,
-  useWindowDimensions,
-  View,
-} from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import DismissKeyboard from "../components/DismissKeyboard";
 import Photo from "../components/Photo";
 import ScreenLayout from "../components/ScreenLayout";
+import useMe from "../hooks/useMe";
+import { colors } from "../colors";
 
 const SEE_USERS = gql`
-  query seeUsers($value: Boolean!) {
-    seeUsers(value: $value) {
+  query seeUsers($isMentor: Boolean!) {
+    seeUsers(isMentor: $isMentor) {
       id
       mentor
       username
@@ -26,7 +20,8 @@ const SEE_USERS = gql`
       birth
       gender
       phoneNumber
-      counselPrice
+      counselPriceLow
+      counselPriceHigh
       major
       field
       bio
@@ -43,18 +38,27 @@ const TitleContainer = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
+  margin: 10px 0px 10px 20px;
+`;
+
+const TitleInfo = styled.Text`
+  font-size: 12px;
+  color: ${colors.darkMint};
   margin-left: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 `;
 
 const UserContainer = styled.TouchableOpacity`
   margin: 0px 20px 10px 20px;
   padding: 10px;
-  border: 1px solid #dddddd;
+  padding-right: 30px;
+  border: 1px solid ${colors.darkMint};
   border-radius: 5px;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const ProfileImg = styled.Image`
@@ -65,41 +69,89 @@ const ProfileImg = styled.Image`
   border-radius: 40px;
 `;
 
-const InfoContainer = styled.TouchableOpacity`
+const InfoContainer = styled.View`
   flex-direction: column;
+  width: 50%;
 `;
 
 const BoldText = styled.Text`
   font-weight: 500;
-  margin-top: 10px;
   margin-bottom: 5px;
 `;
 
 const GrayText = styled.Text`
-  font-size: 14px;
+  font-size: 11px;
   color: gray;
 `;
 
+const ButtonContainer = styled.View`
+  flex-direction: column;
+`;
+
+const LikeButton = styled.TouchableOpacity`
+  align-self: flex-end;
+  width: 25px;
+  height: 25px;
+  margin-bottom: 10px;
+`;
+
+const CertificationButton = styled.TouchableOpacity`
+  width: 50px;
+  height: 50px;
+  margin-left: 30px;
+  background-color: ${colors.darkMint};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CerfiticationButtonText = styled.Text`
+  font-size: 12px;
+  color: white;
+`;
+
 export default function Search({ navigation }) {
+  const { data: meData } = useMe();
   const { data, loading, refetch, fetchMore } = useQuery(SEE_USERS, {
     variables: {
-      value: true,
+      isMentor: meData?.me?.mentor,
     },
   });
   const renderItem = ({ item: user }) => (
-    <UserContainer>
+    <UserContainer
+      onPress={() => {
+        navigation.navigate("Profile", {
+          user: user,
+        });
+      }}
+    >
       <ProfileImg
         source={
           user.avatar ? { uri: user.avatar } : require("../assets/profile.png")
         }
       />
       <InfoContainer>
-        <BoldText>{user.name}</BoldText>
-        <GrayText>단과대학 : {user.major}원</GrayText>
+        <BoldText>
+          {user.name} {user.mentor ? "멘토" : "멘티"}
+        </BoldText>
         <GrayText>
-          상담분야 : {user.field ? JSON.parse(user.field) : ""}
+          {user.mentor ? "" : "희망 "}단과대학 :{" "}
+          {user.major !== "[]" ? user.major : "없음"}
         </GrayText>
+        <GrayText>
+          {user.mentor ? "" : "희망 "}상담분야 :{" "}
+          {user.field ? JSON.parse(user.field) : ""}
+        </GrayText>
+        <GrayText>요청 미리보기: </GrayText>
       </InfoContainer>
+      <ButtonContainer>
+        <LikeButton>
+          <Ionicons name={"heart-outline"} color={"tomato"} size={25} />
+        </LikeButton>
+        <CertificationButton>
+          <CerfiticationButtonText>제안{"\n"}하기</CerfiticationButtonText>
+        </CertificationButton>
+      </ButtonContainer>
     </UserContainer>
   );
   const refresh = async () => {
@@ -124,7 +176,8 @@ export default function Search({ navigation }) {
   return (
     <ScreenLayout loading={loading}>
       <TitleContainer>
-        <Title>멘토/멘티 찾기</Title>
+        <Title>{meData?.me?.mentor ? "멘티" : "멘토"} 찾기</Title>
+        <TitleInfo>멘티에게 상담을 제안하세요.</TitleInfo>
       </TitleContainer>
       <FlatList
         onEndReachedThreshold={0.8}

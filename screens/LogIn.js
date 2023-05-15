@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { isLoggedInVar, logUserIn } from "../apollo";
@@ -27,7 +27,14 @@ const Logo = styled.Image`
   width: 80%;
 `;
 
+const LoginMessage = styled.Text`
+  font-size: 14px;
+  color: tomato;
+  margin-bottom: 30px;
+`;
+
 export default function LogIn({ route: { params } }) {
+  const [loginMessage, setLoginMessage] = useState("");
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       username: params?.username,
@@ -41,6 +48,8 @@ export default function LogIn({ route: { params } }) {
     } = data;
     if (ok) {
       await logUserIn(token);
+    } else {
+      setLoginMessage("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
   };
   const [logInMutation, { loading }] = useMutation(LOGIN_MUTATION, {
@@ -93,6 +102,7 @@ export default function LogIn({ route: { params } }) {
         onChangeText={(text) => setValue("password", text)}
         color={"black"}
       />
+      <LoginMessage>{loginMessage}</LoginMessage>
       <AuthButton
         text="로그인"
         loading={loading}

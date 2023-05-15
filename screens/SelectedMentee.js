@@ -119,7 +119,7 @@ const CerfiticationButtonText = styled.Text`
   color: white;
 `;
 
-export default function Notifications({ navigation }) {
+export default function SelectedMentee({ navigation }) {
   const { data: meData } = useMe();
   const { data, loading, refetch, fetchMore } = useQuery(SEE_USERS, {
     variables: {
@@ -187,8 +187,8 @@ export default function Notifications({ navigation }) {
     <ScreenLayout loading={loading}>
       <TitleContainer>
         <TitleButtonContainer>
-          <GrayTitle>찜한 {meData?.me?.mentor ? "멘티" : "멘토"}</GrayTitle>
-          <Title>보낸 제안</Title>
+          <Title>찜한 {meData?.me?.mentor ? "멘티" : "멘토"}</Title>
+          <GrayTitle>보낸 제안</GrayTitle>
         </TitleButtonContainer>
         <TitleInfo>멘티에게 상담을 제안하세요.</TitleInfo>
       </TitleContainer>

@@ -32,17 +32,6 @@ export default function TabsNav() {
         {() => <SharedStackNav screenName="Feed" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="멘티찾기"
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <TabIcon iconName={"search"} color={color} focused={focused} />
-          ),
-          tabBarVisible: false,
-        }}
-      >
-        {() => <SharedStackNav screenName="Search" />}
-      </Tabs.Screen>
-      <Tabs.Screen
         name="찜한멘티"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -50,7 +39,7 @@ export default function TabsNav() {
           ),
         }}
       >
-        {() => <SharedStackNav screenName="Notifications" />}
+        {() => <SharedStackNav screenName="SelectedMentee" />}
       </Tabs.Screen>
       <Tabs.Screen
         name="제안/요청"
@@ -74,7 +63,7 @@ export default function TabsNav() {
           ),
         }}
       >
-        {() => <SharedStackNav screenName="Notifications" />}
+        {() => <SharedStackNav screenName="Consults" />}
       </Tabs.Screen>
       <Tabs.Screen
         name="프로필"
@@ -97,7 +86,6 @@ export default function TabsNav() {
       >
         {() => <SharedStackNav screenName="Me" />}
       </Tabs.Screen>
-
       {/*
         <Tabs.Screen
           name="SearchTab"

@@ -3,12 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Photo from "../screens/Photo";
 import Profile from "../screens/Profile";
 import Feed from "../screens/Feed";
-import Search from "../screens/Search";
 import Notifications from "../screens/Notifications";
 import Me from "../screens/Me";
-import { Image } from "react-native";
 import Likes from "../screens/Likes";
 import Comments from "../screens/Comments";
+import SelectedMentee from "../screens/SelectedMentee";
+import Consults from "../screens/Consults";
 
 const Stack = createStackNavigator();
 
@@ -30,7 +30,7 @@ export default function SharedStackNav({ screenName }) {
         <Stack.Screen
           name={"Feed"}
           component={Feed}
-          options={{
+          /*options={{
             headerTitle: () => (
               <Image
                 style={{ width: 120, height: 40 }}
@@ -38,14 +38,17 @@ export default function SharedStackNav({ screenName }) {
                 source={require("../assets/logo.png")}
               />
             ),
-          }}
+          }}*/
         />
       ) : null}
-      {screenName === "Search" ? (
-        <Stack.Screen name={"Search"} component={Search} />
+      {screenName === "SelectedMentee" ? (
+        <Stack.Screen name={"SelectedMentee"} component={SelectedMentee} />
       ) : null}
       {screenName === "Notifications" ? (
         <Stack.Screen name={"Notifications"} component={Notifications} />
+      ) : null}
+      {screenName === "Consults" ? (
+        <Stack.Screen name={"Consults"} component={Consults} />
       ) : null}
       {screenName === "Me" ? <Stack.Screen name={"Me"} component={Me} /> : null}
       <Stack.Screen name="Profile" component={Profile} />

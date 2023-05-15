@@ -1,6 +1,7 @@
 import { gql, useQuery, useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useForm } from "react-hook-form";
 import { FlatList, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ScreenLayout from "../components/ScreenLayout";
@@ -32,23 +33,11 @@ const SEE_USERS = gql`
 
 const TitleContainer = styled.View`
   align-self: flex-start;
-  flex-direction: column;
-`;
-
-const TitleButtonContainer = styled.View`
-  flex-direction: row;
 `;
 
 const Title = styled.Text`
   font-size: 20px;
   font-weight: 600;
-  margin: 10px 0px 10px 20px;
-`;
-
-const GrayTitle = styled.Text`
-  font-size: 20px;
-  font-weight: 600;
-  color: gray;
   margin: 10px 0px 10px 20px;
 `;
 
@@ -119,7 +108,7 @@ const CerfiticationButtonText = styled.Text`
   color: white;
 `;
 
-export default function Notifications({ navigation }) {
+export default function Consults({ navigation }) {
   const { data: meData } = useMe();
   const { data, loading, refetch, fetchMore } = useQuery(SEE_USERS, {
     variables: {
@@ -143,11 +132,9 @@ export default function Notifications({ navigation }) {
         <BoldText>
           {user.name} {user.mentor ? "멘토" : "멘티"}
         </BoldText>
-        <TouchableOpacity>
-          <GrayText>
-            {user.mentor ? "" : "희망"}단과대학 : {user.major}
-          </GrayText>
-        </TouchableOpacity>
+        <GrayText>
+          {user.mentor ? "" : "희망"}단과대학 : {user.major}
+        </GrayText>
         <GrayText>
           {user.mentor ? "" : "희망"}상담분야 :{" "}
           {user.field ? JSON.parse(user.field) : ""}
@@ -186,11 +173,8 @@ export default function Notifications({ navigation }) {
   return (
     <ScreenLayout loading={loading}>
       <TitleContainer>
-        <TitleButtonContainer>
-          <GrayTitle>찜한 {meData?.me?.mentor ? "멘티" : "멘토"}</GrayTitle>
-          <Title>보낸 제안</Title>
-        </TitleButtonContainer>
-        <TitleInfo>멘티에게 상담을 제안하세요.</TitleInfo>
+        <Title>상담 메시지</Title>
+        <TitleInfo>상담 예정일자를 확인하세요.</TitleInfo>
       </TitleContainer>
       <FlatList
         onEndReachedThreshold={0.8}

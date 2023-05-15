@@ -21,7 +21,8 @@ const CREATE_NEW_ACCOUNT_MUTATION = gql`
     $birth: String!
     $gender: String!
     $phoneNumber: String!
-    $counselPrice: Int
+    $counselPriceLow: Int
+    $counselPriceHigh: Int
     $major: String
     $field: String
   ) {
@@ -33,7 +34,8 @@ const CREATE_NEW_ACCOUNT_MUTATION = gql`
       birth: $birth
       gender: $gender
       phoneNumber: $phoneNumber
-      counselPrice: $counselPrice
+      counselPriceLow: $counselPriceLow
+      counselPriceHigh: $counselPriceHigh
       major: $major
       field: $field
     ) {
@@ -93,8 +95,9 @@ const NextButtonText = styled.Text`
 
 export default function InputMentorMentee({ navigation }) {
   const color = mentor ? colors.darkMint : colors.navy;
-  const [counselPrice, setCounselPrice] = useState(0);
-  const [major, setMajor] = useState("");
+  const [counselPriceLow, setCounselPriceLow] = useState(0);
+  const [counselPriceHigh, setCounselPriceHigh] = useState(0);
+  const [major, setMajor] = useState([]);
   const [list, setList] = useState([]);
   const majorData = [
     {
@@ -142,8 +145,9 @@ export default function InputMentorMentee({ navigation }) {
         birth: exBirth,
         gender: exGender,
         phoneNumber: exPhoneNumber,
-        counselPrice: counselPrice,
-        major: major,
+        counselPriceLow: counselPriceLow,
+        counselPriceHigh: counselPriceHigh,
+        major: JSON.stringify(major),
         field: JSON.stringify(list),
       },
     });
@@ -161,34 +165,127 @@ export default function InputMentorMentee({ navigation }) {
         {mentor ? "멘토" : "멘티"}로 시작하기
       </Mode>
       {mentor ? (
-        <TextInput
-          style={{ marginBottom: "20%" }}
-          color={color}
-          placeholder="30분 상담 금액 (1,000원 단위로 입력)"
-          onChangeText={(text) => setCounselPrice(Number(text))}
-        />
+        <>
+          <TextInput
+            style={{ marginBottom: "20%" }}
+            color={color}
+            placeholder="30분 상담 금액 (1,000원 단위로 입력)"
+            onChangeText={(text) => setCounselPriceLow(Number(text))}
+          />
+          <TextInput
+            style={{ marginBottom: "20%" }}
+            color={color}
+            placeholder="30분 상담 금액 (1,000원 단위로 입력)"
+            onChangeText={(text) => setCounselPriceHigh(Number(text))}
+          />
+        </>
       ) : (
         <></>
       )}
       <SubTitle>{mentor ? "" : "희망 "}단과대학</SubTitle>
-      <BouncyCheckboxGroup
-        checkboxProps={{
-          textStyle: { textDecorationLine: "none" },
-          style: {
-            transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
-            marginLeft: "-3.5%",
-            marginBottom: "15%",
-          },
-        }}
-        data={majorData}
-        onChange={(selectedItem) => {
-          if (selectedItem.id === 0) setMajor("의과대학");
-          else if (selectedItem.id === 1) setMajor("수의과대학");
-          else if (selectedItem.id === 2) setMajor("한의과대학");
-          else if (selectedItem.id === 3) setMajor("치과대학");
-          else if (selectedItem.id === 4) setMajor("약학대학");
-        }}
-      />
+      {mentor ? (
+        <BouncyCheckboxGroup
+          checkboxProps={{
+            textStyle: { textDecorationLine: "none" },
+            style: {
+              transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }],
+              marginLeft: "-3.5%",
+              marginBottom: "15%",
+            },
+          }}
+          data={majorData}
+          onChange={(selectedItem) => {
+            if (selectedItem.id === 0) setMajor(["의과대학"]);
+            else if (selectedItem.id === 1) setMajor(["수의과대학"]);
+            else if (selectedItem.id === 2) setMajor(["한의과대학"]);
+            else if (selectedItem.id === 3) setMajor(["치과대학"]);
+            else if (selectedItem.id === 4) setMajor(["약학대학"]);
+          }}
+        />
+      ) : (
+        <CheckBoxContainer style={{ marginBottom: 30 }}>
+          <BouncyCheckbox
+            style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+            textStyle={{ textDecorationLine: "none" }}
+            marginLeft={"-2%"}
+            fillColor={color}
+            unfillColor="#FFFFFF"
+            text={"의과\n대학"}
+            iconStyle={{ borderColor: color }}
+            onPress={(isChecked) => {
+              if (isChecked) {
+                setList([...major, "의과대학"]);
+              } else {
+                setList(major.filter((ele) => ele !== "의과대학"));
+              }
+            }}
+          />
+          <BouncyCheckbox
+            style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+            textStyle={{ textDecorationLine: "none" }}
+            marginLeft={"-3.5%"}
+            fillColor={color}
+            unfillColor="#FFFFFF"
+            text={"수의과\n대학"}
+            iconStyle={{ borderColor: color }}
+            onPress={(isChecked) => {
+              if (isChecked) {
+                setList([...major, "수의과대학"]);
+              } else {
+                setList(major.filter((ele) => ele !== "수의과대학"));
+              }
+            }}
+          />
+          <BouncyCheckbox
+            style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+            textStyle={{ textDecorationLine: "none" }}
+            marginLeft={"-3.5%"}
+            fillColor={color}
+            unfillColor="#FFFFFF"
+            text={"한의과\n대학"}
+            iconStyle={{ borderColor: color }}
+            onPress={(isChecked) => {
+              if (isChecked) {
+                setList([...major, "한의과대학"]);
+              } else {
+                setList(major.filter((ele) => ele !== "한의과대학"));
+              }
+            }}
+          />
+          <BouncyCheckbox
+            style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+            textStyle={{ textDecorationLine: "none" }}
+            marginLeft={"-3.5%"}
+            fillColor={color}
+            unfillColor="#FFFFFF"
+            text={"치과\n대학"}
+            iconStyle={{ borderColor: color }}
+            onPress={(isChecked) => {
+              if (isChecked) {
+                setList([...major, "치과대학"]);
+              } else {
+                setList(major.filter((ele) => ele !== "치과대학"));
+              }
+            }}
+          />
+          <BouncyCheckbox
+            style={{ transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }] }}
+            textStyle={{ textDecorationLine: "none" }}
+            marginLeft={"-3.5%"}
+            fillColor={color}
+            unfillColor="#FFFFFF"
+            text={"약학\n대학"}
+            iconStyle={{ borderColor: color }}
+            onPress={(isChecked) => {
+              if (isChecked) {
+                setList([...major, "약학대학"]);
+              } else {
+                setList(major.filter((ele) => ele !== "약학대학"));
+              }
+            }}
+          />
+        </CheckBoxContainer>
+      )}
       <SubTitle>{mentor ? "" : "희망 "}상담분야</SubTitle>
       <CheckBoxContainer>
         <BouncyCheckbox

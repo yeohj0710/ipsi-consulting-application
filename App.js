@@ -31,6 +31,7 @@ export default function App() {
       tokenVar(token);
     }
     StatusBar.setBarStyle("dark-content");
+    StatusBar.setBackgroundColor("white");
     // await persistCache({
     // cache,
     // storage: new AsyncStorageWrapper(AsyncStorage),

@@ -12,7 +12,8 @@ const ME_QUERY = gql`
       birth
       gender
       phoneNumber
-      counselPrice
+      counselPriceLow
+      counselPriceHigh
       major
       field
       bio

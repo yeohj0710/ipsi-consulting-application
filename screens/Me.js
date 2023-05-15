@@ -107,7 +107,8 @@ export default function Me({ navigation }) {
         </ProfileText>
         {mentor ? (
           <ProfileText>
-            상담 희망 금액 (30분) : {data?.me?.counselPrice}원
+            상담 희망 금액 (30분) : {data?.me?.counselPriceLow} ~{" "}
+            {data?.me?.counselPriceHigh}원
           </ProfileText>
         ) : (
           ""

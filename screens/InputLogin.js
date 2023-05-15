@@ -103,10 +103,13 @@ export default function InputLogin({ navigation }) {
   const [usernameCheckColor, setUsernameCheckColor] = useState("tomato");
   const [passwordCheckColor, setPasswordCheckColor] = useState("tomato");
   const { register, handleSubmit, setValue, getValues } = useForm();
+  const hangeulRegex = /^[A-Za-z0-9]+$/;
   useEffect(() => {
     setUsernameCheckColor("tomato");
     if (username.length < 4) {
       setUsernameCheckMessage("아이디는 4자 이상이어야 합니다.");
+    } else if (!hangeulRegex.test(username)) {
+      setUsernameCheckMessage("한글을 포함할 수 없습니다.");
     } else {
       setUsernameCheckMessage("아이디 중복 확인을 해주세요.");
     }

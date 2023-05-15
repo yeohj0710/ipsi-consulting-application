@@ -7,6 +7,8 @@ import UploadForm from "../screens/UploadForm";
 import MessagesNav from "./MessagesNav";
 import useMe from "../hooks/useMe";
 import EditProfileNav from "./EditProfileNav";
+import Search from "../screens/Search";
+import Profile from "../screens/Profile";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +20,34 @@ export default function LoggedInNav() {
         name="Tabs"
         options={{ headerShown: false }}
         component={TabsNav}
+      />
+      <Stack.Screen
+        name="Search"
+        options={{
+          headerBackImage: ({ tintColor }) => (
+            <Ionicons color={tintColor} name="close-outline" size={30} />
+          ),
+          headerTitle: "",
+        }}
+        component={Search}
+        /*options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <TabIcon iconName={"search"} color={color} focused={focused} />
+          ),
+          tabBarVisible: false,
+        }}*/
+      >
+        {/*() => <SharedStackNav screenName="Search" />*/}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Profile"
+        options={{
+          headerBackImage: ({ tintColor }) => (
+            <Ionicons color={tintColor} name="close-outline" size={30} />
+          ),
+          headerTitle: "",
+        }}
+        component={Profile}
       />
       <Stack.Screen
         name="EditProfile"

@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, LogBox } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Photo from "../components/Photo";
 import ScreenLayout from "../components/ScreenLayout";
@@ -35,15 +35,15 @@ const FEED_QUERY = gql`
 const Container = styled.View`
   flex: 1;
   width: 100%;
-  padding-top: 40px;
   padding-left: 30px;
   padding-right: 35px;
   background-color: white;
 `;
 
 const Name = styled.Text`
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
 `;
 
 const Title = styled.Text`
@@ -57,6 +57,8 @@ const SmallContainer = styled.View`
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   border: 1.2px solid ${colors.darkMint};
   border-radius: 10px;
 `;
@@ -70,21 +72,36 @@ const ProfileImg = styled.Image`
 `;
 
 const ProfileInfoContainer = styled.View`
-  width: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  margin-left: 10px;
 `;
 
 const ProfileMajor = styled.Text`
   font-weight: 500;
-  margin-top: 10px;
   margin-bottom: 5px;
 `;
 
 const ProfileText = styled.Text`
-  font-size: 14px;
+  font-size: 10px;
+  margin-bottom: 2px;
   color: gray;
+`;
+
+const CertificationButton = styled.TouchableOpacity`
+  width: 50px;
+  height: 50px;
+  margin-left: 30px;
+  margin-right: 10px;
+  background-color: ${colors.darkMint};
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CerfiticationButtonText = styled.Text`
+  font-size: 12px;
+  color: white;
 `;
 
 const Box = styled.View`
@@ -137,6 +154,16 @@ const GrayText = styled.Text`
   color: gray;
 `;
 
+const SearchBox = styled.TouchableOpacity`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.2px solid ${colors.darkMint};
+  border-radius: 10px;
+`;
+
 const LogoutButton = styled.TouchableOpacity`
   width: 120px;
   height: 35px;
@@ -186,17 +213,9 @@ export default function Feed({ navigation }) {
   return (
     <ScreenLayout loading={loading}>
       <Container>
-        <Name>{meData?.me?.name} 멘토님</Name>
-        <Title>멘티 찾기</Title>
-        <SmallContainer>
-          <Ionicons
-            style={{ margin: 12 }}
-            name={"search"}
-            color={"gray"}
-            size={22}
-          />
-          <ProfileText style={{ marginTop: 14 }}>멘티 찾기</ProfileText>
-        </SmallContainer>
+        <Name>
+          {meData?.me?.name} {meData?.me?.mentor ? "멘토" : "멘티"}님
+        </Name>
         <Title>프로필 미리보기</Title>
         <SmallContainer>
           {meData?.me?.avatar ? (
@@ -206,21 +225,27 @@ export default function Feed({ navigation }) {
           )}
           <ProfileInfoContainer>
             <ProfileMajor>{meData?.me?.major}</ProfileMajor>
+            <ProfileText>OO대학교 OO학과</ProfileText>
             <ProfileText>
-              30분 상담 금액 : {meData?.me?.counselPrice}원
+              30분 상담 금액 : {meData?.me?.counselPriceLow}
+              {" ~ "}
+              {meData?.me?.counselPriceHigh}원
             </ProfileText>
             <ProfileText>
               상담분야 :{" "}
               {meData?.me?.field ? JSON.parse(meData?.me?.field) : ""}
             </ProfileText>
           </ProfileInfoContainer>
+          <CertificationButton>
+            <CerfiticationButtonText>인증{"\n"}하기</CerfiticationButtonText>
+          </CertificationButton>
         </SmallContainer>
         {/*
         <FindMentee onPress={() => navigation.navigate("Search")}>
           <FindMenteeText>멘티 찾기</FindMenteeText>
         </FindMentee>
         */}
-        <Title>받은 요청</Title>
+        {/* <Title>받은 요청</Title> */}
         <Title>상담 내역</Title>
         <Box>
           <SmallBox1>
@@ -239,6 +264,15 @@ export default function Feed({ navigation }) {
         <GrayText style={{ textAlign: "center" }}>
           오늘 OO시 OO분에 상담이 예정되어 있어요.
         </GrayText>
+        <Title>{meData?.me?.mentor ? "멘티" : "멘토"} 찾기</Title>
+        <SearchBox onPress={() => navigation.navigate("Search")}>
+          <Ionicons
+            style={{ margin: 12 }}
+            name={"search"}
+            color={"gray"}
+            size={22}
+          />
+        </SearchBox>
         <LogoutButton
           onPress={async () => {
             await AsyncStorage.clear();
