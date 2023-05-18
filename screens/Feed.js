@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { colors } from "../colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Update from "expo-updates";
+import { convertField, convertMajor } from "../components/ConvertString";
 
 const FEED_QUERY = gql`
   query seeFeed($offset: Int!) {
@@ -223,19 +224,20 @@ export default function Feed({ navigation }) {
           ) : (
             <ProfileImg source={require("../assets/profile.png")} />
           )}
-          <ProfileInfoContainer>
-            <ProfileMajor>{meData?.me?.major}</ProfileMajor>
-            <ProfileText>OO대학교 OO학과</ProfileText>
-            <ProfileText>
-              30분 상담 금액 : {meData?.me?.counselPriceLow}
-              {" ~ "}
-              {meData?.me?.counselPriceHigh}원
-            </ProfileText>
-            <ProfileText>
-              상담분야 :{" "}
-              {meData?.me?.field ? JSON.parse(meData?.me?.field) : ""}
-            </ProfileText>
-          </ProfileInfoContainer>
+          {meData?.me?.mentor ? (
+            <ProfileInfoContainer>
+              <ProfileMajor>{convertMajor(meData?.me?.major)}</ProfileMajor>
+              <ProfileText>OO대학교 OO학과</ProfileText>
+              <ProfileText>
+                30분 상담 금액 : {meData?.me?.counselPriceLow}
+                {" ~ "}
+                {meData?.me?.counselPriceHigh}원
+              </ProfileText>
+              <ProfileText>
+                상담분야 : {convertField(meData?.me?.field)}
+              </ProfileText>
+            </ProfileInfoContainer>
+          ) : null}
           <CertificationButton>
             <CerfiticationButtonText>인증{"\n"}하기</CerfiticationButtonText>
           </CertificationButton>

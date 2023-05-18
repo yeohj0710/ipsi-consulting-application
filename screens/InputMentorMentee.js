@@ -98,7 +98,7 @@ export default function InputMentorMentee({ navigation }) {
   const [counselPriceLow, setCounselPriceLow] = useState(0);
   const [counselPriceHigh, setCounselPriceHigh] = useState(0);
   const [major, setMajor] = useState([]);
-  const [list, setList] = useState([]);
+  const [field, setField] = useState([]);
   const majorData = [
     {
       id: 0,
@@ -148,7 +148,7 @@ export default function InputMentorMentee({ navigation }) {
         counselPriceLow: counselPriceLow,
         counselPriceHigh: counselPriceHigh,
         major: JSON.stringify(major),
-        field: JSON.stringify(list),
+        field: JSON.stringify(field),
       },
     });
   };
@@ -195,11 +195,11 @@ export default function InputMentorMentee({ navigation }) {
           }}
           data={majorData}
           onChange={(selectedItem) => {
-            if (selectedItem.id === 0) setMajor(["의과대학"]);
-            else if (selectedItem.id === 1) setMajor(["수의과대학"]);
-            else if (selectedItem.id === 2) setMajor(["한의과대학"]);
-            else if (selectedItem.id === 3) setMajor(["치과대학"]);
-            else if (selectedItem.id === 4) setMajor(["약학대학"]);
+            if (selectedItem.id === 0) setMajor([...major, "의과대학"]);
+            else if (selectedItem.id === 1) setMajor([...major, "수의과대학"]);
+            else if (selectedItem.id === 2) setMajor([...major, "한의과대학"]);
+            else if (selectedItem.id === 3) setMajor([...major, "치과대학"]);
+            else if (selectedItem.id === 4) setMajor([...major, "약학대학"]);
           }}
         />
       ) : (
@@ -214,9 +214,9 @@ export default function InputMentorMentee({ navigation }) {
             iconStyle={{ borderColor: color }}
             onPress={(isChecked) => {
               if (isChecked) {
-                setList([...major, "의과대학"]);
+                setMajor([...major, "의과대학"]);
               } else {
-                setList(major.filter((ele) => ele !== "의과대학"));
+                setMajor(major.filter((ele) => ele !== "의과대학"));
               }
             }}
           />
@@ -230,9 +230,9 @@ export default function InputMentorMentee({ navigation }) {
             iconStyle={{ borderColor: color }}
             onPress={(isChecked) => {
               if (isChecked) {
-                setList([...major, "수의과대학"]);
+                setMajor([...major, "수의과대학"]);
               } else {
-                setList(major.filter((ele) => ele !== "수의과대학"));
+                setMajor(major.filter((ele) => ele !== "수의과대학"));
               }
             }}
           />
@@ -246,9 +246,9 @@ export default function InputMentorMentee({ navigation }) {
             iconStyle={{ borderColor: color }}
             onPress={(isChecked) => {
               if (isChecked) {
-                setList([...major, "한의과대학"]);
+                setMajor([...major, "한의과대학"]);
               } else {
-                setList(major.filter((ele) => ele !== "한의과대학"));
+                setMajor(major.filter((ele) => ele !== "한의과대학"));
               }
             }}
           />
@@ -262,9 +262,9 @@ export default function InputMentorMentee({ navigation }) {
             iconStyle={{ borderColor: color }}
             onPress={(isChecked) => {
               if (isChecked) {
-                setList([...major, "치과대학"]);
+                setMajor([...major, "치과대학"]);
               } else {
-                setList(major.filter((ele) => ele !== "치과대학"));
+                setMajor(major.filter((ele) => ele !== "치과대학"));
               }
             }}
           />
@@ -278,9 +278,9 @@ export default function InputMentorMentee({ navigation }) {
             iconStyle={{ borderColor: color }}
             onPress={(isChecked) => {
               if (isChecked) {
-                setList([...major, "약학대학"]);
+                setMajor([...major, "약학대학"]);
               } else {
-                setList(major.filter((ele) => ele !== "약학대학"));
+                setMajor(major.filter((ele) => ele !== "약학대학"));
               }
             }}
           />
@@ -298,9 +298,9 @@ export default function InputMentorMentee({ navigation }) {
           iconStyle={{ borderColor: color }}
           onPress={(isChecked) => {
             if (isChecked) {
-              setList([...list, "학습코칭"]);
+              setField([...field, "학습코칭"]);
             } else {
-              setList(list.filter((ele) => ele !== "학습코칭"));
+              setField(field.filter((ele) => ele !== "학습코칭"));
             }
           }}
         />
@@ -314,9 +314,9 @@ export default function InputMentorMentee({ navigation }) {
           iconStyle={{ borderColor: color }}
           onPress={(isChecked) => {
             if (isChecked) {
-              setList([...list, "대학입시"]);
+              setField([...field, "대학입시"]);
             } else {
-              setList(list.filter((ele) => ele !== "대학입시"));
+              setField(field.filter((ele) => ele !== "대학입시"));
             }
           }}
         />
@@ -330,9 +330,9 @@ export default function InputMentorMentee({ navigation }) {
           iconStyle={{ borderColor: color }}
           onPress={(isChecked) => {
             if (isChecked) {
-              setList([...list, "대학원"]);
+              setField([...field, "대학원"]);
             } else {
-              setList(list.filter((ele) => ele !== "대학원"));
+              setField(field.filter((ele) => ele !== "대학원"));
             }
           }}
         />
@@ -346,9 +346,9 @@ export default function InputMentorMentee({ navigation }) {
           iconStyle={{ borderColor: color }}
           onPress={(isChecked) => {
             if (isChecked) {
-              setList([...list, "편입"]);
+              setField([...field, "편입"]);
             } else {
-              setList(list.filter((ele) => ele !== "편입"));
+              setField(field.filter((ele) => ele !== "편입"));
             }
           }}
         />
@@ -362,9 +362,9 @@ export default function InputMentorMentee({ navigation }) {
           iconStyle={{ borderColor: color }}
           onPress={(isChecked) => {
             if (isChecked) {
-              setList([...list, "진로전공"]);
+              setField([...field, "진로전공"]);
             } else {
-              setList(list.filter((ele) => ele !== "진로전공"));
+              setField(field.filter((ele) => ele !== "진로전공"));
             }
           }}
         />

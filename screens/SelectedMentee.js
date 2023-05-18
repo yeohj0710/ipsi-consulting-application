@@ -6,6 +6,7 @@ import styled from "styled-components/native";
 import ScreenLayout from "../components/ScreenLayout";
 import useMe from "../hooks/useMe";
 import { colors } from "../colors";
+import UserInfo from "../components/UserInfo";
 
 const SEE_USERS = gql`
   query seeUsers($isMentor: Boolean!) {
@@ -134,34 +135,7 @@ export default function SelectedMentee({ navigation }) {
         });
       }}
     >
-      <ProfileImg
-        source={
-          user.avatar ? { uri: user.avatar } : require("../assets/profile.png")
-        }
-      />
-      <InfoContainer>
-        <BoldText>
-          {user.name} {user.mentor ? "멘토" : "멘티"}
-        </BoldText>
-        <TouchableOpacity>
-          <GrayText>
-            {user.mentor ? "" : "희망"}단과대학 : {user.major}
-          </GrayText>
-        </TouchableOpacity>
-        <GrayText>
-          {user.mentor ? "" : "희망"}상담분야 :{" "}
-          {user.field ? JSON.parse(user.field) : ""}
-        </GrayText>
-        <GrayText>요청미리보기: </GrayText>
-      </InfoContainer>
-      <ButtonContainer>
-        <LikeButton>
-          <Ionicons name={"heart-outline"} color={"tomato"} size={25} />
-        </LikeButton>
-        <CertificationButton>
-          <CerfiticationButtonText>제안{"\n"}하기</CerfiticationButtonText>
-        </CertificationButton>
-      </ButtonContainer>
+      <UserInfo user={user} />
     </UserContainer>
   );
   const refresh = async () => {
